@@ -1,4 +1,4 @@
-FROM openjdk:9-jdk
+FROM openjdk:8-jdk-alpine
 
 ADD . /service
 WORKDIR /service
