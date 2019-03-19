@@ -27,6 +27,6 @@ public class CompanyRepositoryTest {
         Optional<Company> optionalCompany = this.companyRepository.findByName(newCompany.getName());
 
         assertThat(optionalCompany.isPresent()).isTrue();
-        assertThat(optionalCompany.get().getName()).isEqualTo(newCompany.getName());
+        assertThat(optionalCompany.get()).isEqualTo(newCompany);
     }
 }
