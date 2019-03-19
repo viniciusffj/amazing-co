@@ -19,15 +19,4 @@ public class CompanyRepositoryTest {
 
     @Autowired
     private CompanyRepository companyRepository;
-
-    @Test
-    public void shouldSaveCompany() {
-        Company company = new Company("Awesome company");
-
-        companyRepository.save(company);
-
-        List<Company> companies = Lists.newArrayList(companyRepository.findAll());
-        assertThat(companies).hasSize(1);
-        assertThat(companies.get(0)).isEqualTo(company);
-    }
 }
