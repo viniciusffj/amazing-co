@@ -1,6 +1,7 @@
 package amazing.co.models;
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +16,7 @@ public class Company {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Getter
     private String name;
 
     public Company() {
@@ -24,7 +26,4 @@ public class Company {
         this.name = name;
     }
 
-    public String getName() {
-        return name;
-    }
 }
