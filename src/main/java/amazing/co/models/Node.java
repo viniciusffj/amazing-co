@@ -1,5 +1,6 @@
 package amazing.co.models;
 
+import amazing.co.controllers.dtos.NodeDTO;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
@@ -24,4 +25,8 @@ public class Node {
 
     @OneToOne(optional = true)
     private Node parent;
+
+    public NodeDTO toDTO() {
+        return new NodeDTO(id, name);
+    }
 }
