@@ -25,4 +25,10 @@ public class CompanyController {
                 .status(HttpStatus.CREATED)
                 .body(companyWithId);
     }
+
+    @DeleteMapping("/companies/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) {
+        companyService.delete(id);
+    }
 }

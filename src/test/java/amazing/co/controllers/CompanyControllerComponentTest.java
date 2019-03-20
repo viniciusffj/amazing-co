@@ -22,7 +22,8 @@ public class CompanyControllerComponentTest {
     }
 
     @Test
-    public void shouldCreateCompany() {
+    public void shouldCreateAndDeleteCompany() {
+        Integer companyId =
         given()
                 .contentType("application/json")
                 .body("{ \"name\": \"duda's\" }")
@@ -30,6 +31,15 @@ public class CompanyControllerComponentTest {
                 .post("/companies")
         .then()
                 .statusCode(HttpStatus.CREATED.value())
-                .body("$", hasKey("id"));
+                .body("$", hasKey("id"))
+        .extract()
+                .path("id");
+
+        given()
+                .pathParam("id", companyId)
+        .when()
+                .delete("/companies/{id}")
+        .then()
+                .statusCode(204);
     }
 }
