@@ -1,13 +1,11 @@
 package amazing.co.repositories;
 
 import amazing.co.models.Company;
-import org.junit.*;
-import org.junit.runner.*;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.*;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.Optional;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
@@ -20,13 +18,10 @@ public class CompanyRepositoryTest {
     private CompanyRepository companyRepository;
 
     @Test
-    public void shouldFindCompanyByName() {
-        Company newCompany = new Company("awesome newCompany");
+    public void shouldCheckIfCompanyExistsWithAGivenName() {
+        Company newCompany = new Company("awesome company");
         this.companyRepository.save(newCompany);
 
-        Optional<Company> optionalCompany = this.companyRepository.findByName(newCompany.getName());
-
-        assertThat(optionalCompany.isPresent()).isTrue();
-        assertThat(optionalCompany.get()).isEqualTo(newCompany);
+        assertThat(companyRepository.existsByName("awesome company")).isTrue();
     }
 }

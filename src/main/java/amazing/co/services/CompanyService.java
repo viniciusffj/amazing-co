@@ -23,6 +23,6 @@ public class CompanyService {
     }
 
     private boolean companyExists(Company company) {
-        return companyRepository.findByName(company.getName()).isPresent();
+        return companyRepository.existsByName(company.getName());
     }
 }

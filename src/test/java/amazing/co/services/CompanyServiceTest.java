@@ -32,8 +32,8 @@ public class CompanyServiceTest {
 
     @Test
     public void shouldThrowWhenCreatingADuplicatedCompany() {
-        when(companyRepository.findByName("Great Corp"))
-                .thenReturn(Optional.of(new Company("Great Corp")));
+        when(companyRepository.existsByName("Great Corp"))
+                .thenReturn(true);
 
         exceptionRule.expect(DuplicatedEntityException.class);
 
