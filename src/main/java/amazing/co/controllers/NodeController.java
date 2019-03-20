@@ -23,12 +23,10 @@ public class NodeController {
         this.companyRepository = companyRepository;
     }
 
-    @PostMapping("/companies/{companyId}/nodes")
+    @PostMapping("/companies/{company}/nodes")
     @ResponseBody
-    public ResponseEntity<NodeDTO> createRootNode(@PathVariable Long companyId,
+    public ResponseEntity<NodeDTO> createRootNode(@PathVariable Company company,
                                                @RequestBody NodeDTO nodeDTO) {
-        Company company = companyRepository.findById(companyId).get();
-
         Node node = nodeDTO.toNode(company);
         Node nodeWithId = nodeService.create(node);
 

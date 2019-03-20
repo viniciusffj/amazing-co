@@ -11,8 +11,7 @@ import static org.junit.Assert.*;
 public class NodeControllerComponentTest extends ComponentTest {
 
     @Test
-    public void shouldCreateRootNoode() {
-        // create company
+    public void shouldCreateRootNode() {
         Integer companyId =
                 given()
                         .contentType("application/json")
@@ -23,7 +22,6 @@ public class NodeControllerComponentTest extends ComponentTest {
                         .extract()
                         .path("id");
 
-        // post "companies/1/nodes"
         given()
                 .contentType("application/json")
                 .body("{ \"name\": \"Orquestra\" }")
@@ -31,9 +29,19 @@ public class NodeControllerComponentTest extends ComponentTest {
         .when()
                 .post("/companies/{companyId}/nodes")
         .then()
-                // check if response code is 201
                 .statusCode(HttpStatus.CREATED.value())
-                // check if response has id
                 .body("$", hasKey("id"));
+    }
+
+    @Test
+    public void shouldReturn404WhenCompanyDoesNotExist() {
+        given()
+                .contentType("application/json")
+                .body("{ \"name\": \"Will not work\" }")
+                .pathParam("companyId", 10000)
+        .when()
+                .post("/companies/{companyId}/nodes")
+        .then()
+                .statusCode(HttpStatus.NOT_FOUND.value());
     }
 }

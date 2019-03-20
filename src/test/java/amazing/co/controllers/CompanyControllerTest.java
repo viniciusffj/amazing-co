@@ -1,5 +1,6 @@
 package amazing.co.controllers;
 
+import amazing.co.config.CompanyCustomEditor;
 import amazing.co.exceptions.DuplicatedEntityException;
 import amazing.co.exceptions.EntityNotFoundException;
 import amazing.co.models.Company;
@@ -23,6 +24,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @WebMvcTest(CompanyController.class)
 public class CompanyControllerTest {
+
+    @MockBean
+    private CompanyCustomEditor customEditor;
 
     @Autowired
     private MockMvc mvc;
