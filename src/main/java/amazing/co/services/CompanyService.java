@@ -1,5 +1,6 @@
 package amazing.co.services;
 
+import amazing.co.exceptions.DuplicatedEntityException;
 import amazing.co.models.Company;
 import amazing.co.repositories.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,13 @@ public class CompanyService {
     }
 
     public void insert(Company company) {
-        this.companyRepository.save(company);
+        if (companyExists(company)) {
+            throw new DuplicatedEntityException("Company is already registered");
+        }
+        companyRepository.save(company);
+    }
+
+    private boolean companyExists(Company company) {
+        return companyRepository.findByName(company.getName()).isPresent();
     }
 }
