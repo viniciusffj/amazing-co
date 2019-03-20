@@ -15,11 +15,11 @@ public class CompanyService {
         this.companyRepository = companyRepository;
     }
 
-    public void create(Company company) {
+    public Company create(Company company) {
         if (companyExists(company)) {
             throw new DuplicatedEntityException("Company is already registered");
         }
-        companyRepository.save(company);
+        return companyRepository.save(company);
     }
 
     private boolean companyExists(Company company) {

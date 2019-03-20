@@ -4,6 +4,7 @@ import amazing.co.models.Company;
 import amazing.co.services.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,8 +17,12 @@ public class CompanyController {
     }
 
     @PostMapping("/companies")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void create(@RequestBody Company company) {
-        this.companyService.create(company);
+    @ResponseBody
+    public ResponseEntity<Company> create(@RequestBody Company company) {
+        Company companyWithId = companyService.create(company);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(companyWithId);
     }
 }
