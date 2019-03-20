@@ -15,7 +15,7 @@ public class CompanyService {
         this.companyRepository = companyRepository;
     }
 
-    public void insert(Company company) {
+    public void create(Company company) {
         if (companyExists(company)) {
             throw new DuplicatedEntityException("Company is already registered");
         }

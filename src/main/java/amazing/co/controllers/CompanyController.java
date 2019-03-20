@@ -18,6 +18,6 @@ public class CompanyController {
     @PostMapping("/companies")
     @ResponseStatus(HttpStatus.CREATED)
     public void create(@RequestBody Company company) {
-        this.companyService.insert(company);
+        this.companyService.create(company);
     }
 }
