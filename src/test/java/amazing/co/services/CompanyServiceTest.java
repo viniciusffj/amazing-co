@@ -1,6 +1,7 @@
 package amazing.co.services;
 
 import amazing.co.exceptions.DuplicatedEntityException;
+import amazing.co.exceptions.EntityNotFoundException;
 import amazing.co.models.Company;
 import amazing.co.repositories.CompanyRepository;
 import org.junit.Rule;
@@ -33,5 +34,15 @@ public class CompanyServiceTest {
         exceptionRule.expect(DuplicatedEntityException.class);
 
         companyService.create(new Company("Great Corp"));
+    }
+
+    @Test
+    public void shouldThrowWhenDeletingInvalidCompany() {
+        when(companyRepository.existsById(1914L))
+                .thenReturn(false);
+
+        exceptionRule.expect(EntityNotFoundException.class);
+
+        companyService.delete(1914L);
     }
 }

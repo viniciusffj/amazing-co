@@ -1,6 +1,7 @@
 package amazing.co.controllers;
 
 import amazing.co.exceptions.DuplicatedEntityException;
+import amazing.co.exceptions.EntityNotFoundException;
 import amazing.co.models.Company;
 import amazing.co.services.CompanyService;
 import org.junit.Test;
@@ -14,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -38,5 +40,15 @@ public class CompanyControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{ \"name\": \"Existing Company\"}"))
                 .andExpect(status().isConflict());
+    }
+
+    @Test
+    public void shouldReturn404IfCompanyDoesNotExists() throws Exception {
+        doThrow(new EntityNotFoundException("Company does not exist"))
+            .when(companyService).delete(1914L);
+
+        this.mvc.perform(
+                    delete("/companies/{id}", 1914L))
+                .andExpect(status().isNotFound());
     }
 }
