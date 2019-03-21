@@ -54,7 +54,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:8080/companies/11",
+							"raw": "http://localhost:8080/companies/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -62,7 +62,44 @@
 							"port": "8080",
 							"path": [
 								"companies",
-								"11"
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "nodes",
+			"item": [
+				{
+					"name": "Create Node",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"A\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/companies/1/nodes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"companies",
+								"1",
+								"nodes"
 							]
 						}
 					},
