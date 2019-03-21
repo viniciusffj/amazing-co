@@ -23,4 +23,8 @@ public class NodeDTO {
     public Node toNode(Company company) {
         return new Node(name, company);
     }
+
+    public Node toNonRootNode(Node parent) {
+        return new Node(name, parent, parent);
+    }
 }

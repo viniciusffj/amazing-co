@@ -2,11 +2,13 @@ package amazing.co.models;
 
 import amazing.co.controllers.dtos.NodeDTO;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @EqualsAndHashCode(exclude = "id")
+@NoArgsConstructor
 public class Node {
     public Node(String name, Company company) {
         this.name = name;

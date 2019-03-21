@@ -34,4 +34,16 @@ public class NodeController {
                 .status(HttpStatus.CREATED)
                 .body(nodeWithId.toDTO());
     }
+
+    @PostMapping("/companies/{company}/nodes/{parent}")
+    @ResponseBody
+    public ResponseEntity<NodeDTO> createNonRootNode(@PathVariable Node parent,
+                                                     @RequestBody NodeDTO nodeDTO) {
+        Node node = nodeDTO.toNonRootNode(parent);
+        Node nodeWithId = nodeService.create(node);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(nodeWithId.toDTO());
+    }
 }
