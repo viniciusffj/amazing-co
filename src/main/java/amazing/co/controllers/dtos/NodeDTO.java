@@ -25,6 +25,6 @@ public class NodeDTO {
     }
 
     public Node toNonRootNode(Node parent) {
-        return new Node(name, parent, parent);
+        return new Node(name, parent, parent.getRoot());
     }
 }

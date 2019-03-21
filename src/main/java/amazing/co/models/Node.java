@@ -39,8 +39,15 @@ public class Node {
     private Node parent;
 
     @OneToOne(optional = true)
-    @Getter
     private Node root;
+
+    public Node getRoot() {
+        return isRootNode() ? this : root;
+    }
+
+    public boolean isRootNode() {
+        return root == null;
+    }
 
     public NodeDTO toDTO() {
         return new NodeDTO(id, name);
