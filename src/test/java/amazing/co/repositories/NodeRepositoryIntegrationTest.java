@@ -56,11 +56,13 @@ public class NodeRepositoryIntegrationTest {
         nodeRepository.save(root);
 
         Node node = new Node("Non Root", root, root);
-
-        nodeRepository.save(node);
+        Node expectedNode = nodeRepository.save(node);
 
         ArrayList<Node> nodes = Lists.newArrayList(nodeRepository.findAll());
         assertThat(nodes).hasSize(2);
-        assertThat(nodes.get(1)).isEqualTo(node);
+
+        assertThat(expectedNode.getCompany()).isEqualTo(awesomeCompany);
+        assertThat(expectedNode.getRoot()).isEqualTo(root);
+        assertThat(expectedNode.getParent()).isEqualTo(root);
     }
 }

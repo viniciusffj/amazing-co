@@ -2,6 +2,7 @@ package amazing.co.models;
 
 import amazing.co.controllers.dtos.NodeDTO;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -19,21 +20,26 @@ public class Node {
         this.name = name;
         this.parent = parent;
         this.root = root;
+        this.company = parent.getCompany();
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Getter
     private String name;
 
     @OneToOne
+    @Getter
     private Company company;
 
     @OneToOne(optional = true)
+    @Getter
     private Node parent;
 
     @OneToOne(optional = true)
+    @Getter
     private Node root;
 
     public NodeDTO toDTO() {
