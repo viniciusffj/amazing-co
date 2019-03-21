@@ -74,7 +74,7 @@
 			"name": "nodes",
 			"item": [
 				{
-					"name": "Create Node",
+					"name": "Create Root Node",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -87,7 +87,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"A\"\n}"
+							"raw": "{\n\t\"name\": \"root\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:8080/companies/1/nodes",
@@ -100,6 +100,39 @@
 								"companies",
 								"1",
 								"nodes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Non Root Node",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"A\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/companies/1/nodes/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"companies",
+								"1",
+								"nodes",
+								"2"
 							]
 						}
 					},
