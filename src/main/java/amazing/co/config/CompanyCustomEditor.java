@@ -19,12 +19,6 @@ public class CompanyCustomEditor extends PropertyEditorSupport {
     }
 
     @Override
-    public String getAsText() {
-        Company company = (Company) getValue();
-        return company == null ? "" : company.getId().toString();
-    }
-
-    @Override
     public void setAsText(String text) throws IllegalArgumentException {
         Optional<Company> optionalCompany = companyRepository.findById(Long.parseLong(text));
 
