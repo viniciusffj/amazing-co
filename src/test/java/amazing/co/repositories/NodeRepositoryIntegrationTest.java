@@ -9,7 +9,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
@@ -41,7 +40,7 @@ public class NodeRepositoryIntegrationTest {
     }
 
     @Test
-    public void shouldCreateNode() {
+    public void shouldCreateRootNode() {
         Node node = new Node("Root", awesomeCompany);
 
         nodeRepository.save(node);
@@ -49,5 +48,19 @@ public class NodeRepositoryIntegrationTest {
         ArrayList<Node> nodes = Lists.newArrayList(nodeRepository.findAll());
         assertThat(nodes).hasSize(1);
         assertThat(nodes.get(0)).isEqualTo(node);
+    }
+
+    @Test
+    public void shouldCreateNonRootNode() {
+        Node root = new Node("Root", awesomeCompany);
+        nodeRepository.save(root);
+
+        Node node = new Node("Non Root", root, root);
+
+        nodeRepository.save(node);
+
+        ArrayList<Node> nodes = Lists.newArrayList(nodeRepository.findAll());
+        assertThat(nodes).hasSize(2);
+        assertThat(nodes.get(1)).isEqualTo(node);
     }
 }

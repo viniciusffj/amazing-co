@@ -2,7 +2,6 @@ package amazing.co.models;
 
 import amazing.co.controllers.dtos.NodeDTO;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 
 import javax.persistence.*;
 
@@ -12,6 +11,12 @@ public class Node {
     public Node(String name, Company company) {
         this.name = name;
         this.company = company;
+    }
+
+    public Node(String name, Node parent, Node root) {
+        this.name = name;
+        this.parent = parent;
+        this.root = root;
     }
 
     @Id
@@ -25,6 +30,9 @@ public class Node {
 
     @OneToOne(optional = true)
     private Node parent;
+
+    @OneToOne(optional = true)
+    private Node root;
 
     public NodeDTO toDTO() {
         return new NodeDTO(id, name);
