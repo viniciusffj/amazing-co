@@ -11,12 +11,20 @@ import javax.persistence.*;
 @EqualsAndHashCode(exclude = "id")
 @NoArgsConstructor
 public class Node {
-    public Node(String name, Company company) {
+    public static Node rootNode(String name, Company company) {
+        return new Node(name, company);
+    }
+
+    private Node(String name, Company company) {
         this.name = name;
         this.company = company;
     }
 
-    public Node(String name, Node parent, Node root) {
+    public static Node nonRootNode(String name, Node parent, Node root) {
+        return new Node(name, parent, root);
+    }
+
+    private Node(String name, Node parent, Node root) {
         this.name = name;
         this.parent = parent;
         this.root = root;

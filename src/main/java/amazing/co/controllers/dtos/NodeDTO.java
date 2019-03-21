@@ -21,10 +21,10 @@ public class NodeDTO {
     }
 
     public Node toNode(Company company) {
-        return new Node(name, company);
+        return Node.rootNode(name, company);
     }
 
     public Node toNonRootNode(Node parent) {
-        return new Node(name, parent, parent.getRoot());
+        return Node.nonRootNode(name, parent, parent.getRoot());
     }
 }

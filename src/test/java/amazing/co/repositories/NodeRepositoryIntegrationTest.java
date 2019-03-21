@@ -41,7 +41,7 @@ public class NodeRepositoryIntegrationTest {
 
     @Test
     public void shouldCreateRootNode() {
-        Node node = new Node("Root", awesomeCompany);
+        Node node = Node.rootNode("Root", awesomeCompany);
 
         nodeRepository.save(node);
 
@@ -52,10 +52,10 @@ public class NodeRepositoryIntegrationTest {
 
     @Test
     public void shouldCreateNonRootNode() {
-        Node root = new Node("Root", awesomeCompany);
+        Node root = Node.rootNode("Root", awesomeCompany);
         nodeRepository.save(root);
 
-        Node node = new Node("Non Root", root, root);
+        Node node = Node.nonRootNode("Non Root", root, root);
         Node expectedNode = nodeRepository.save(node);
 
         ArrayList<Node> nodes = Lists.newArrayList(nodeRepository.findAll());

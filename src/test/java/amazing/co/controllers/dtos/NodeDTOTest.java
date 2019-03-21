@@ -23,9 +23,9 @@ public class NodeDTOTest {
 
     private Node createChildOfRootNode() {
         Company company = new Company("A company");
-        Node root = new Node("Root node", company);
+        Node root = Node.rootNode("Root node", company);
 
-        return new Node("Some node", root, root);
+        return Node.nonRootNode("Some node", root, root);
     }
 
     @Test
@@ -41,9 +41,9 @@ public class NodeDTOTest {
 
     private Node createGranChildOfRootNode() {
         Company company = new Company("A company");
-        Node root = new Node("Root node", company);
-        Node parent = new Node("Parent node", root, root);
+        Node root = Node.rootNode("Root node", company);
+        Node parent = Node.nonRootNode("Parent node", root, root);
 
-        return new Node("Some node", parent, root);
+        return Node.nonRootNode("Some node", parent, root);
     }
 }
