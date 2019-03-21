@@ -49,8 +49,21 @@ public class NodeControllerComponentTest extends ComponentTest {
         .then()
                 .statusCode(HttpStatus.CREATED.value())
                 .body("$", hasKey("id"));
+    }
 
+    @Test
+    public void shouldReturn404WhenParentDoesNotExist() {
+        Integer companyId = createCompany("Valid company");
 
+        given()
+                .contentType("application/json")
+                .body("{ \"name\": \"Will not work\" }")
+                .pathParam("companyId", companyId)
+                .pathParam("parentId", 10000)
+        .when()
+                .post("/companies/{companyId}/nodes/{parentId}")
+        .then()
+                .statusCode(HttpStatus.NOT_FOUND.value());
     }
 
     public Integer createCompany(String name) {

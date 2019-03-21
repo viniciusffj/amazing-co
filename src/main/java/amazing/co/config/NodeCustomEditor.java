@@ -1,5 +1,6 @@
 package amazing.co.config;
 
+import amazing.co.exceptions.EntityNotFoundException;
 import amazing.co.models.Node;
 import amazing.co.repositories.NodeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,11 @@ public class NodeCustomEditor extends PropertyEditorSupport {
     public void setAsText(String text) throws IllegalArgumentException {
         Optional<Node> optionalNode = nodeRepository.findById(Long.parseLong(text));
 
-        setValue(optionalNode.get());
+        if (optionalNode.isPresent()) {
+            setValue(optionalNode.get());
+        } else {
+            throw new EntityNotFoundException("Node does not exist");
+        }
     }
 
 }
