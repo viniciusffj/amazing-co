@@ -27,4 +27,10 @@ public class NonRootNodeService {
     private boolean nodeExists(Node node) {
         return nodeRepository.existsByNameAndCompany(node.getName(), node.getCompany());
     }
+
+    public Node update(Node node, Long newParentId) {
+        Node parent = nodeRepository.findById(newParentId).get();
+        node.setParent(parent);
+        return nodeRepository.save(node);
+    }
 }

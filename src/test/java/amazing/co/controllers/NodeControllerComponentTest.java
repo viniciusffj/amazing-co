@@ -1,5 +1,7 @@
 package amazing.co.controllers;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 
@@ -9,10 +11,32 @@ import static org.hamcrest.Matchers.hasKey;
 
 public class NodeControllerComponentTest extends ComponentTest {
 
+    private Integer companyId;
+
+    @Override
+    @Before
+    public void setUp() throws Exception {
+        super.setUp();
+
+        companyId = createCompany("Orquestra");
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        deleteCompany(companyId);
+    }
+
+    private void deleteCompany(Integer companyId) {
+        given()
+                .pathParam("id", companyId)
+        .when()
+                .delete("/companies/{id}")
+        .then()
+                .statusCode(204);
+    }
+
     @Test
     public void shouldCreateRootNode() {
-        Integer companyId = createCompany("Orquestra");
-
         Integer nodeId = given()
                 .contentType("application/json")
                 .body("{ \"name\": \"Root\" }")
@@ -42,7 +66,6 @@ public class NodeControllerComponentTest extends ComponentTest {
 
     @Test
     public void shouldCreateNonRootNode() {
-        Integer companyId = createCompany("Awesome Company");
         Integer parentId = createRoot(companyId);
 
         given()
@@ -59,8 +82,6 @@ public class NodeControllerComponentTest extends ComponentTest {
 
     @Test
     public void shouldReturn404WhenParentDoesNotExist() {
-        Integer companyId = createCompany("Valid company");
-
         given()
                 .contentType("application/json")
                 .body("{ \"name\": \"Will not work\" }")
@@ -70,6 +91,45 @@ public class NodeControllerComponentTest extends ComponentTest {
                 .post("/companies/{companyId}/nodes/{parentId}/nodes")
         .then()
                 .statusCode(HttpStatus.NOT_FOUND.value());
+    }
+
+    @Test
+    public void shouldUpdateNodeParent() {
+        /*
+        *  Before:
+        *
+        *       root
+        *       / \
+        *      A   B
+        *
+        *  After:
+        *
+        *       root
+        *       /
+        *      A
+        *     /
+        *    B
+        *
+        * */
+        Integer rootId = createRoot(companyId);
+        Integer nodeAId = createNode(companyId, rootId, "A");
+        Integer nodeBId = createNode(companyId, rootId, "B");
+
+        String body = String.format("{ \"newParentId\": \"%s\" }", nodeAId);
+
+        Integer actualParent = given()
+                .contentType("application/json")
+                .body(body)
+                .pathParam("companyId", companyId)
+                .pathParam("nodeId", nodeBId)
+        .when()
+                .put("/companies/{companyId}/nodes/{nodeId}")
+        .then()
+                .statusCode(HttpStatus.OK.value())
+                .extract()
+                .path("parentId");
+
+        assertThat(actualParent).isEqualTo(nodeAId);
     }
 
     public Integer createCompany(String name) {
@@ -94,6 +154,22 @@ public class NodeControllerComponentTest extends ComponentTest {
                     .pathParam("companyId", companyId)
             .when()
                     .post("/companies/{companyId}/nodes")
+            .then()
+                    .extract()
+                    .path("id");
+    }
+
+    public Integer createNode(Integer companyId, Integer parentId, String name) {
+        String body = String.format("{ \"name\": \"%s\" }", name);
+
+        return
+            given()
+                    .contentType("application/json")
+                    .body(body)
+                    .pathParam("companyId", companyId)
+                    .pathParam("parentId", parentId)
+            .when()
+                    .post("/companies/{companyId}/nodes/{parentId}/nodes")
             .then()
                     .extract()
                     .path("id");

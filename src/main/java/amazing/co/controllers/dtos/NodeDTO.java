@@ -2,6 +2,7 @@ package amazing.co.controllers.dtos;
 
 import amazing.co.models.Company;
 import amazing.co.models.Node;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,6 +10,7 @@ import lombok.Setter;
 import javax.validation.constraints.NotNull;
 
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class NodeDTO {
     @Getter
     private Long id;
@@ -18,9 +20,18 @@ public class NodeDTO {
     @NotNull
     private String name;
 
+    @Getter
+    private Long parentId;
+
     public NodeDTO(Long id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public NodeDTO(Long id, String name, Long parentId) {
+        this.id = id;
+        this.name = name;
+        this.parentId = parentId;
     }
 
     public Node toNode(Company company) {

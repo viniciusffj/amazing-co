@@ -4,6 +4,7 @@ import amazing.co.controllers.dtos.NodeDTO;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -35,6 +36,8 @@ public class Node {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Setter
+    @Getter
     private Long id;
 
     @Getter
@@ -47,6 +50,7 @@ public class Node {
 
     @OneToOne(optional = true)
     @Getter
+    @Setter
     private Node parent;
 
     @OneToOne(optional = true)
@@ -61,6 +65,9 @@ public class Node {
     }
 
     public NodeDTO toDTO() {
-        return new NodeDTO(id, name);
+        if (isRootNode()) {
+            return new NodeDTO(id, name);
+        }
+        return new NodeDTO(id, name, parent.getId());
     }
 }

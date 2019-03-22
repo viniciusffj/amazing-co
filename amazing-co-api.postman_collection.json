@@ -138,6 +138,39 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Update Node Parent",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"newParentId\": 2\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/companies/1/nodes/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"companies",
+								"1",
+								"nodes",
+								"3"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

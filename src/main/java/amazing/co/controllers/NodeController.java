@@ -1,6 +1,7 @@
 package amazing.co.controllers;
 
 import amazing.co.controllers.dtos.NodeDTO;
+import amazing.co.controllers.dtos.UpdateNodeDTO;
 import amazing.co.models.Company;
 import amazing.co.models.Node;
 import amazing.co.services.NonRootNodeService;
@@ -47,5 +48,14 @@ public class NodeController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(nodeWithId.toDTO());
+    }
+
+    @PutMapping("companies/{company}/nodes/{node}")
+    @ResponseBody
+    public ResponseEntity<NodeDTO> updateNode(@PathVariable Node node,
+                                              @RequestBody UpdateNodeDTO updateNodeDTO) {
+        Node updatedNode = nonRootNodeService.update(node, updateNodeDTO.getNewParentId());
+
+        return ResponseEntity.ok(updatedNode.toDTO());
     }
 }
