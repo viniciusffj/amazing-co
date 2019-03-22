@@ -57,22 +57,6 @@ public class NodeControllerComponentTest extends ComponentTest {
     }
 
     @Test
-    public void shouldCreateNonRootNode() {
-        Integer parentId = NodeRequestHelper.createRoot(companyId);
-
-        given()
-                .contentType("application/json")
-                .body("{ \"name\": \"A\" }")
-                .pathParam("companyId", companyId)
-                .pathParam("parentId", parentId)
-        .when()
-                .post("/companies/{companyId}/nodes/{parentId}/nodes")
-        .then()
-                .statusCode(HttpStatus.CREATED.value())
-                .body("$", hasKey("id"));
-    }
-
-    @Test
     public void shouldReturn404WhenParentDoesNotExist() {
         given()
                 .contentType("application/json")
