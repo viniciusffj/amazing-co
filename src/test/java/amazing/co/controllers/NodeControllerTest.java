@@ -1,6 +1,7 @@
 package amazing.co.controllers;
 
-import amazing.co.services.NodeService;
+import amazing.co.services.NonRootNodeService;
+import amazing.co.services.RootNodeService;
 import org.junit.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -12,7 +13,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(NodeController.class)
 public class NodeControllerTest extends BaseControllerTest {
     @MockBean
-    private NodeService nodeService;
+    private NonRootNodeService nonRootNodeService;
+
+    @MockBean
+    private RootNodeService rootNodeService;
 
     @Test
     public void shouldReturnBadRequestIfNamingIsMissingForRootNode() throws Exception {

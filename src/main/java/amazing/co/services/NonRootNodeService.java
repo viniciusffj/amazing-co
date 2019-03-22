@@ -7,12 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class NodeService {
+public class NonRootNodeService {
 
     private NodeRepository nodeRepository;
 
     @Autowired
-    public NodeService(NodeRepository nodeRepository) {
+    public NonRootNodeService(NodeRepository nodeRepository) {
         this.nodeRepository = nodeRepository;
     }
 
@@ -26,17 +26,5 @@ public class NodeService {
 
     private boolean nodeExists(Node node) {
         return nodeRepository.existsByNameAndCompany(node.getName(), node.getCompany());
-    }
-
-    public Node createRootNode(Node rootNode) {
-        if (rootNodeExists(rootNode)) {
-            throw new DuplicatedEntityException("Root node already exists");
-        }
-
-        return nodeRepository.save(rootNode);
-    }
-
-    private boolean rootNodeExists(Node node) {
-        return nodeRepository.existsWhereRootIsNullByCompany(node.getCompany());
     }
 }

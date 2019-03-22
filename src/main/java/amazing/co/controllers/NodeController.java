@@ -3,7 +3,8 @@ package amazing.co.controllers;
 import amazing.co.controllers.dtos.NodeDTO;
 import amazing.co.models.Company;
 import amazing.co.models.Node;
-import amazing.co.services.NodeService;
+import amazing.co.services.NonRootNodeService;
+import amazing.co.services.RootNodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,11 +15,14 @@ import javax.validation.Valid;
 @RestController
 public class NodeController {
 
-    private NodeService nodeService;
+    private NonRootNodeService nonRootNodeService;
+    private RootNodeService rootNodeService;
 
     @Autowired
-    public NodeController(NodeService nodeService) {
-        this.nodeService = nodeService;
+    public NodeController(NonRootNodeService nonRootNodeService,
+                          RootNodeService rootNodeService) {
+        this.nonRootNodeService = nonRootNodeService;
+        this.rootNodeService = rootNodeService;
     }
 
     @PostMapping("/companies/{company}/nodes")
@@ -26,7 +30,7 @@ public class NodeController {
     public ResponseEntity<NodeDTO> createRootNode(@PathVariable Company company,
                                                   @RequestBody @Valid NodeDTO nodeDTO) {
         Node node = nodeDTO.toNode(company);
-        Node nodeWithId = nodeService.createRootNode(node);
+        Node nodeWithId = rootNodeService.createNode(node);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -38,7 +42,7 @@ public class NodeController {
     public ResponseEntity<NodeDTO> createNonRootNode(@PathVariable Node parent,
                                                      @RequestBody @Valid NodeDTO nodeDTO) {
         Node node = nodeDTO.toNonRootNode(parent);
-        Node nodeWithId = nodeService.create(node);
+        Node nodeWithId = nonRootNodeService.create(node);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
