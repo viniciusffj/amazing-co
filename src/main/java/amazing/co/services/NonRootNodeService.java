@@ -1,10 +1,13 @@
 package amazing.co.services;
 
 import amazing.co.exceptions.DuplicatedEntityException;
+import amazing.co.exceptions.EntityNotFoundException;
 import amazing.co.models.Node;
 import amazing.co.repositories.NodeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class NonRootNodeService {
@@ -33,7 +36,13 @@ public class NonRootNodeService {
             throw new IllegalStateException("Cannot change root parent");
         }
 
-        Node parent = nodeRepository.findById(newParentId).get();
+        Optional<Node> optionalNode = nodeRepository.findById(newParentId);
+
+        if (!optionalNode.isPresent()) {
+            throw new EntityNotFoundException("New parent node does not exist");
+        }
+
+        Node parent = optionalNode.get();
         node.setParent(parent);
         return nodeRepository.save(node);
     }
