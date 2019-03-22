@@ -72,4 +72,12 @@ public class NodeRepositoryIntegrationTest {
 
         assertThat(nodeRepository.existsByNameAndCompany("Root", awesomeCompany)).isTrue();
     }
+
+    @Test
+    public void shouldCheckIfRootNodeExistsForACompany() {
+        Node root = Node.rootNode("Root", awesomeCompany);
+        nodeRepository.save(root);
+
+        assertThat(nodeRepository.existsWhereRootIsNullByCompany(awesomeCompany)).isTrue();
+    }
 }

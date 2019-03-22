@@ -27,4 +27,16 @@ public class NodeService {
     private boolean nodeExists(Node node) {
         return nodeRepository.existsByNameAndCompany(node.getName(), node.getCompany());
     }
+
+    public Node createRootNode(Node rootNode) {
+        if (rootNodeExists(rootNode)) {
+            throw new DuplicatedEntityException("Root node already exists");
+        }
+
+        return nodeRepository.save(rootNode);
+    }
+
+    private boolean rootNodeExists(Node node) {
+        return nodeRepository.existsWhereRootIsNullByCompany(node.getCompany());
+    }
 }

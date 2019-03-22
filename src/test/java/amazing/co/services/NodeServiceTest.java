@@ -35,4 +35,14 @@ public class NodeServiceTest {
 
         nodeService.create(Node.rootNode("existing-node", company));
     }
+
+    @Test
+    public void shouldThrowWhenCreatingDuplicatedRootNode() {
+        Company company = new Company("A company");
+        when(nodeRepository.existsWhereRootIsNullByCompany(company)).thenReturn(true);
+
+        exceptionRule.expect(DuplicatedEntityException.class);
+
+        nodeService.createRootNode(Node.rootNode("duplicated-root", company));
+    }
 }

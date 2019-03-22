@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.springframework.http.HttpStatus;
 
 import static io.restassured.RestAssured.given;
+import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.hamcrest.Matchers.hasKey;
 
 public class NodeControllerComponentTest extends ComponentTest {
@@ -11,7 +12,8 @@ public class NodeControllerComponentTest extends ComponentTest {
     @Test
     public void shouldCreateRootNode() {
         Integer companyId = createCompany("Orquestra");
-        given()
+
+        Integer nodeId = given()
                 .contentType("application/json")
                 .body("{ \"name\": \"Root\" }")
                 .pathParam("companyId", companyId)
@@ -19,7 +21,11 @@ public class NodeControllerComponentTest extends ComponentTest {
                 .post("/companies/{companyId}/nodes")
         .then()
                 .statusCode(HttpStatus.CREATED.value())
-                .body("$", hasKey("id"));
+                .body("$", hasKey("id"))
+                .extract()
+                .path("id");
+
+        assertThat(nodeId).isNotNull();
     }
 
     @Test

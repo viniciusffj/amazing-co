@@ -26,7 +26,7 @@ public class NodeController {
     public ResponseEntity<NodeDTO> createRootNode(@PathVariable Company company,
                                                   @RequestBody @Valid NodeDTO nodeDTO) {
         Node node = nodeDTO.toNode(company);
-        Node nodeWithId = nodeService.create(node);
+        Node nodeWithId = nodeService.createRootNode(node);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
