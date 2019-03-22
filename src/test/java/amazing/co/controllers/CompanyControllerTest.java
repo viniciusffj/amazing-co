@@ -55,4 +55,13 @@ public class CompanyControllerTest {
                     delete("/companies/{id}", 1914L))
                 .andExpect(status().isNotFound());
     }
+
+    @Test
+    public void shouldReturnBadRequestIfNamingIsMissing() throws Exception {
+        this.mvc.perform(
+                    post("/companies")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{ }"))
+                .andExpect(status().isBadRequest());
+    }
 }
