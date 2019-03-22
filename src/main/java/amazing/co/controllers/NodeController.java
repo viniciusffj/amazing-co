@@ -53,7 +53,7 @@ public class NodeController {
     @PutMapping("companies/{company}/nodes/{node}")
     @ResponseBody
     public ResponseEntity<NodeDTO> updateNode(@PathVariable Node node,
-                                              @RequestBody UpdateNodeDTO updateNodeDTO) {
+                                              @RequestBody @Valid UpdateNodeDTO updateNodeDTO) {
         Node updatedNode = nonRootNodeService.update(node, updateNodeDTO.getNewParentId());
 
         return ResponseEntity.ok(updatedNode.toDTO());
