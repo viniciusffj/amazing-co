@@ -1,38 +1,30 @@
 package amazing.co.controllers;
 
+import amazing.co.controllers.helpers.NodeRequestHelper;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 
+import static amazing.co.controllers.helpers.CompanyRequestsHelper.createCompany;
+import static amazing.co.controllers.helpers.CompanyRequestsHelper.deleteCompany;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.hamcrest.Matchers.hasKey;
 
 public class NodeControllerComponentTest extends ComponentTest {
-
     private Integer companyId;
 
     @Override
     @Before
     public void setUp() throws Exception {
         super.setUp();
-
         companyId = createCompany("Orquestra");
     }
 
     @After
     public void tearDown() throws Exception {
         deleteCompany(companyId);
-    }
-
-    private void deleteCompany(Integer companyId) {
-        given()
-                .pathParam("id", companyId)
-        .when()
-                .delete("/companies/{id}")
-        .then()
-                .statusCode(204);
     }
 
     @Test
@@ -66,7 +58,7 @@ public class NodeControllerComponentTest extends ComponentTest {
 
     @Test
     public void shouldCreateNonRootNode() {
-        Integer parentId = createRoot(companyId);
+        Integer parentId = NodeRequestHelper.createRoot(companyId);
 
         given()
                 .contentType("application/json")
@@ -93,27 +85,27 @@ public class NodeControllerComponentTest extends ComponentTest {
                 .statusCode(HttpStatus.NOT_FOUND.value());
     }
 
+    /*
+     *  Before:
+     *
+     *       root
+     *       / \
+     *      A   B
+     *
+     *  After:
+     *
+     *       root
+     *       /
+     *      A
+     *     /
+     *    B
+     *
+     * */
     @Test
     public void shouldUpdateNodeParent() {
-        /*
-        *  Before:
-        *
-        *       root
-        *       / \
-        *      A   B
-        *
-        *  After:
-        *
-        *       root
-        *       /
-        *      A
-        *     /
-        *    B
-        *
-        * */
-        Integer rootId = createRoot(companyId);
-        Integer nodeAId = createNode(companyId, rootId, "A");
-        Integer nodeBId = createNode(companyId, rootId, "B");
+        Integer rootId = NodeRequestHelper.createRoot(companyId);
+        Integer nodeAId = NodeRequestHelper.createNode(companyId, rootId, "A");
+        Integer nodeBId = NodeRequestHelper.createNode(companyId, rootId, "B");
 
         String body = String.format("{ \"newParentId\": \"%s\" }", nodeAId);
 
@@ -132,46 +124,4 @@ public class NodeControllerComponentTest extends ComponentTest {
         assertThat(actualParent).isEqualTo(nodeAId);
     }
 
-    public Integer createCompany(String name) {
-        String body = String.format("{ \"name\": \"%s\" }", name);
-
-        return
-            given()
-                    .contentType("application/json")
-                    .body(body)
-            .when()
-                    .post("/companies")
-            .then()
-                    .extract()
-                    .path("id");
-    }
-
-    public Integer createRoot(Integer companyId) {
-        return
-            given()
-                    .contentType("application/json")
-                    .body("{ \"name\": \"Root\" }")
-                    .pathParam("companyId", companyId)
-            .when()
-                    .post("/companies/{companyId}/nodes")
-            .then()
-                    .extract()
-                    .path("id");
-    }
-
-    public Integer createNode(Integer companyId, Integer parentId, String name) {
-        String body = String.format("{ \"name\": \"%s\" }", name);
-
-        return
-            given()
-                    .contentType("application/json")
-                    .body(body)
-                    .pathParam("companyId", companyId)
-                    .pathParam("parentId", parentId)
-            .when()
-                    .post("/companies/{companyId}/nodes/{parentId}/nodes")
-            .then()
-                    .extract()
-                    .path("id");
-    }
 }
