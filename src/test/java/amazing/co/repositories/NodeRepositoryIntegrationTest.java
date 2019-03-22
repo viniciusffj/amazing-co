@@ -42,7 +42,6 @@ public class NodeRepositoryIntegrationTest {
     @Test
     public void shouldCreateRootNode() {
         Node node = Node.rootNode("Root", awesomeCompany);
-
         nodeRepository.save(node);
 
         ArrayList<Node> nodes = Lists.newArrayList(nodeRepository.findAll());
@@ -64,5 +63,13 @@ public class NodeRepositoryIntegrationTest {
         assertThat(expectedNode.getCompany()).isEqualTo(awesomeCompany);
         assertThat(expectedNode.getRoot()).isEqualTo(root);
         assertThat(expectedNode.getParent()).isEqualTo(root);
+    }
+
+    @Test
+    public void shouldCheckIfNodeExistsByNameAndCompany() {
+        Node root = Node.rootNode("Root", awesomeCompany);
+        nodeRepository.save(root);
+
+        assertThat(nodeRepository.existsByNameAndCompany("Root", awesomeCompany)).isTrue();
     }
 }
