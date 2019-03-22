@@ -29,6 +29,10 @@ public class NonRootNodeService {
     }
 
     public Node update(Node node, Long newParentId) {
+        if (node.isRootNode()) {
+            throw new IllegalStateException("Cannot change root parent");
+        }
+
         Node parent = nodeRepository.findById(newParentId).get();
         node.setParent(parent);
         return nodeRepository.save(node);

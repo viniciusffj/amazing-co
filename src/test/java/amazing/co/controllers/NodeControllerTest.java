@@ -7,6 +7,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doThrow;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -38,11 +40,22 @@ public class NodeControllerTest extends BaseControllerTest {
     }
 
     @Test
-    public void shouldReturnBadRequestIfNewParentIdIsMissig() throws Exception {
+    public void shouldReturnBadRequestIfNewParentIdIsMissing() throws Exception {
         this.mvc.perform(
                 put("/companies/1/nodes/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{ }"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shouldReturnBadRequestWhenUpdatingRootNode() throws Exception {
+        doThrow(new IllegalStateException()).when(nonRootNodeService).update(any(), any());
+
+        this.mvc.perform(
+                put("/companies/1/nodes/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{ \"newParentId\": 10000 }"))
                 .andExpect(status().isBadRequest());
     }
 }

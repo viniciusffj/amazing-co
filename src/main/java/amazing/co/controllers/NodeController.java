@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 
@@ -54,8 +55,12 @@ public class NodeController {
     @ResponseBody
     public ResponseEntity<NodeDTO> updateNode(@PathVariable Node node,
                                               @RequestBody @Valid UpdateNodeDTO updateNodeDTO) {
-        Node updatedNode = nonRootNodeService.update(node, updateNodeDTO.getNewParentId());
+        try {
+            Node updatedNode = nonRootNodeService.update(node, updateNodeDTO.getNewParentId());
+            return ResponseEntity.ok(updatedNode.toDTO());
+        } catch (IllegalStateException ex) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage());
+        }
 
-        return ResponseEntity.ok(updatedNode.toDTO());
     }
 }

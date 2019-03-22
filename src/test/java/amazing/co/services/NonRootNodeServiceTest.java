@@ -36,4 +36,12 @@ public class NonRootNodeServiceTest {
         nonRootNodeService.create(Node.rootNode("existing-node", company));
     }
 
+    @Test
+    public void shouldThrowWhenUpdatingRootNode() {
+        Node node = Node.rootNode("A node", new Company("Company"));
+
+        exceptionRule.expect(IllegalStateException.class);
+
+        nonRootNodeService.update(node, 90000L);
+    }
 }
