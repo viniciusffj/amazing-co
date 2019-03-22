@@ -4,6 +4,8 @@ import amazing.co.controllers.dtos.NodeDTO;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -38,8 +40,9 @@ public class Node {
     @Getter
     private String name;
 
-    @OneToOne
     @Getter
+    @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Company company;
 
     @OneToOne(optional = true)
