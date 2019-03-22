@@ -37,7 +37,7 @@ public class NodeController {
                 .body(nodeWithId.toDTO());
     }
 
-    @PostMapping("/companies/{company}/nodes/{parent}")
+    @PostMapping("/companies/{company}/nodes/{parent}/nodes")
     @ResponseBody
     public ResponseEntity<NodeDTO> createNonRootNode(@PathVariable Node parent,
                                                      @RequestBody @Valid NodeDTO nodeDTO) {

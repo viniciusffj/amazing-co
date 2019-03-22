@@ -51,7 +51,7 @@ public class NodeControllerComponentTest extends ComponentTest {
                 .pathParam("companyId", companyId)
                 .pathParam("parentId", parentId)
         .when()
-                .post("/companies/{companyId}/nodes/{parentId}")
+                .post("/companies/{companyId}/nodes/{parentId}/nodes")
         .then()
                 .statusCode(HttpStatus.CREATED.value())
                 .body("$", hasKey("id"));
@@ -67,7 +67,7 @@ public class NodeControllerComponentTest extends ComponentTest {
                 .pathParam("companyId", companyId)
                 .pathParam("parentId", 10000)
         .when()
-                .post("/companies/{companyId}/nodes/{parentId}")
+                .post("/companies/{companyId}/nodes/{parentId}/nodes")
         .then()
                 .statusCode(HttpStatus.NOT_FOUND.value());
     }

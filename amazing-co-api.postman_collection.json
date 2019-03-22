@@ -122,7 +122,7 @@
 							"raw": "{\n\t\"name\": \"A\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/companies/1/nodes/1",
+							"raw": "http://localhost:8080/companies/1/nodes/1/nodes",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -132,7 +132,8 @@
 								"companies",
 								"1",
 								"nodes",
-								"1"
+								"1",
+								"nodes"
 							]
 						}
 					},
