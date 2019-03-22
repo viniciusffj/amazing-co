@@ -1,18 +1,13 @@
 package amazing.co.controllers;
 
-import amazing.co.config.CompanyCustomEditor;
 import amazing.co.exceptions.DuplicatedEntityException;
 import amazing.co.exceptions.EntityNotFoundException;
 import amazing.co.models.Company;
 import amazing.co.services.CompanyService;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
@@ -20,17 +15,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
-@RunWith(SpringRunner.class)
 @WebMvcTest(CompanyController.class)
-public class CompanyControllerTest {
-
-    @MockBean
-    private CompanyCustomEditor customEditor;
-
-    @Autowired
-    private MockMvc mvc;
-
+public class CompanyControllerTest extends BaseControllerTest {
     @MockBean
     private CompanyService companyService;
 

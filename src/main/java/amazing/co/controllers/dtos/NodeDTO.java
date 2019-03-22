@@ -6,14 +6,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotNull;
+
 @NoArgsConstructor
 public class NodeDTO {
-    @Setter
-    @Getter
-    private String name;
-
     @Getter
     private Long id;
+
+    @Setter
+    @Getter
+    @NotNull
+    private String name;
 
     public NodeDTO(Long id, String name) {
         this.id = id;
