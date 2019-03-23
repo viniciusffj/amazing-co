@@ -25,7 +25,7 @@ public class CompanyCustomEditor extends PropertyEditorSupport {
         if (optionalCompany.isPresent()) {
             setValue(optionalCompany.get());
         } else {
-            throw new EntityNotFoundException("Company does not exist");
+            throw new EntityNotFoundException(String.format("Company %s does not exist", text));
         }
     }
 

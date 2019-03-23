@@ -42,6 +42,7 @@ public class CompanyServiceTest {
                 .thenReturn(false);
 
         exceptionRule.expect(EntityNotFoundException.class);
+        exceptionRule.expectMessage("Company 1914 does not exist");
 
         companyService.delete(1914L);
     }

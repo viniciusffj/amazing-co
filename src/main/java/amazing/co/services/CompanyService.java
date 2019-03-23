@@ -29,7 +29,7 @@ public class CompanyService {
 
     public void delete(Long id) {
         if (companyDoesNotExists(id)) {
-            throw new EntityNotFoundException("Company does not exist");
+            throw new EntityNotFoundException(String.format("Company %s does not exist", id));
         }
         companyRepository.deleteById(id);
     }

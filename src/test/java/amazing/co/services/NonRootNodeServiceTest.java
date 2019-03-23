@@ -47,6 +47,7 @@ public class NonRootNodeServiceTest {
         when(nodeRepository.findByNameAndCompany("parent-node", company)).thenReturn(Optional.empty());
 
         exceptionRule.expect(EntityNotFoundException.class);
+        exceptionRule.expectMessage("Node parent-node does not exist");
 
         nonRootNodeService.create(new NodeDTO("existing-node", 1), company, "parent-node");
     }
@@ -59,6 +60,7 @@ public class NonRootNodeServiceTest {
                 .thenReturn(Optional.empty());
 
         exceptionRule.expect(EntityNotFoundException.class);
+        exceptionRule.expectMessage("Node I-DO-NOT-EXIST does not exist");
 
         nonRootNodeService.update("I-DO-NOT-EXIST", company, "ANOTHER-NODE");
     }
@@ -89,6 +91,7 @@ public class NonRootNodeServiceTest {
 
 
         exceptionRule.expect(EntityNotFoundException.class);
+        exceptionRule.expectMessage("Node not-a-valid-node does not exist");
 
         nonRootNodeService.update("valid-node", company, "not-a-valid-node");
     }

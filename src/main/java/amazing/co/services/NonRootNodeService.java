@@ -40,7 +40,7 @@ public class NonRootNodeService {
         Optional<Node> optionalNode = nodeRepository.findByNameAndCompany(nodeName, company);
 
         if (!optionalNode.isPresent()) {
-            throw new EntityNotFoundException("Node does not exist");
+            throw new EntityNotFoundException(String.format("Node %s does not exist", nodeName));
         }
 
         return optionalNode.get();
