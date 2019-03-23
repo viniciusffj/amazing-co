@@ -8,6 +8,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doThrow;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -50,12 +51,12 @@ public class NodeControllerTest extends BaseControllerTest {
 
     @Test
     public void shouldReturnBadRequestWhenUpdatingRootNode() throws Exception {
-        doThrow(new IllegalStateException()).when(nonRootNodeService).update(any(), any());
+        doThrow(new IllegalStateException()).when(nonRootNodeService).update(eq("A"), any(), eq("root"));
 
         this.mvc.perform(
-                put("/companies/1/nodes/1")
+                put("/companies/1/nodes/A")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{ \"newParentId\": 10000 }"))
+                        .content("{ \"newParent\": \"root\"}"))
                 .andExpect(status().isBadRequest());
     }
 }

@@ -36,7 +36,6 @@ public class Node {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Setter
     @Getter
     private Long id;
 
@@ -68,6 +67,6 @@ public class Node {
         if (isRootNode()) {
             return new NodeDTO(id, name);
         }
-        return new NodeDTO(id, name, parent.getId());
+        return new NodeDTO(id, name, parent.getName());
     }
 }

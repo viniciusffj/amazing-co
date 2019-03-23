@@ -119,10 +119,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"A\"\n}"
+							"raw": "{\n\t\"name\": \"B\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/companies/1/nodes/1/nodes",
+							"raw": "http://localhost:8080/companies/1/nodes/root/nodes",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -132,7 +132,7 @@
 								"companies",
 								"1",
 								"nodes",
-								"1",
+								"root",
 								"nodes"
 							]
 						}
@@ -153,10 +153,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"newParentId\": 2\n}"
+							"raw": "{\n\t\"newParent\": \"A\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/companies/1/nodes/3",
+							"raw": "http://localhost:8080/companies/1/nodes/B",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -166,7 +166,7 @@
 								"companies",
 								"1",
 								"nodes",
-								"3"
+								"B"
 							]
 						}
 					},

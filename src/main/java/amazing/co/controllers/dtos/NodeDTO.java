@@ -21,17 +21,17 @@ public class NodeDTO {
     private String name;
 
     @Getter
-    private Long parentId;
+    private String parent;
 
     public NodeDTO(Long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public NodeDTO(Long id, String name, Long parentId) {
+    public NodeDTO(Long id, String name, String parent) {
         this.id = id;
         this.name = name;
-        this.parentId = parentId;
+        this.parent = parent;
     }
 
     public Node toNode(Company company) {

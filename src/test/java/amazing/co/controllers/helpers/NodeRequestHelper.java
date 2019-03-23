@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import static io.restassured.RestAssured.given;
 
 public class NodeRequestHelper {
-    public static Integer createRoot(Integer companyId) {
+    public static String createRoot(Integer companyId) {
         return
             given()
                     .contentType("application/json")
@@ -16,10 +16,10 @@ public class NodeRequestHelper {
             .then()
                     .statusCode(HttpStatus.CREATED.value())
                     .extract()
-                    .path("id");
+                    .path("name");
     }
 
-    public static Integer createNode(Integer companyId, Integer parentId, String name) {
+    public static String createNode(Integer companyId, String parent, String name) {
         String body = String.format("{ \"name\": \"%s\" }", name);
 
         return
@@ -27,12 +27,12 @@ public class NodeRequestHelper {
                     .contentType("application/json")
                     .body(body)
                     .pathParam("companyId", companyId)
-                    .pathParam("parentId", parentId)
+                    .pathParam("parent", parent)
             .when()
-                    .post("/companies/{companyId}/nodes/{parentId}/nodes")
+                    .post("/companies/{companyId}/nodes/{parent}/nodes")
             .then()
                     .statusCode(HttpStatus.CREATED.value())
                     .extract()
-                    .path("id");
+                    .path("name");
     }
 }

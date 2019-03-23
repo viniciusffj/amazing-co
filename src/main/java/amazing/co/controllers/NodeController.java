@@ -41,22 +41,23 @@ public class NodeController {
 
     @PostMapping("/companies/{company}/nodes/{parent}/nodes")
     @ResponseBody
-    public ResponseEntity<NodeDTO> createNonRootNode(@PathVariable Node parent,
+    public ResponseEntity<NodeDTO> createNonRootNode(@PathVariable Company company,
+                                                     @PathVariable String parent,
                                                      @RequestBody @Valid NodeDTO nodeDTO) {
-        Node node = nodeDTO.toNonRootNode(parent);
-        Node nodeWithId = nonRootNodeService.create(node);
+        Node node = nonRootNodeService.create(nodeDTO.getName(), company, parent);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(nodeWithId.toDTO());
+                .body(node.toDTO());
     }
 
     @PutMapping("companies/{company}/nodes/{node}")
     @ResponseBody
-    public ResponseEntity<NodeDTO> updateNode(@PathVariable Node node,
+    public ResponseEntity<NodeDTO> updateNode(@PathVariable Company company,
+                                              @PathVariable String node,
                                               @RequestBody @Valid UpdateNodeDTO updateNodeDTO) {
         try {
-            Node updatedNode = nonRootNodeService.update(node, updateNodeDTO.getNewParentId());
+            Node updatedNode = nonRootNodeService.update(node, company, updateNodeDTO.getNewParent());
             return ResponseEntity.ok(updatedNode.toDTO());
         } catch (IllegalStateException ex) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage());

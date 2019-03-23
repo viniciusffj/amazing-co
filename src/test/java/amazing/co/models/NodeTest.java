@@ -15,18 +15,17 @@ public class NodeTest {
         NodeDTO nodeDTO = node.toDTO();
 
         assertThat(nodeDTO.getName()).isEqualTo("root");
-        assertThat(nodeDTO.getParentId()).isNull();
+        assertThat(nodeDTO.getParent()).isNull();
     }
 
     @Test
     public void shouldCreateNonRootNodeDTO() {
         Node root = Node.rootNode("root", new Company("company"));
-        root.setId(1L);
         Node node = Node.nonRootNode("A node", root, root);
 
         NodeDTO nodeDTO = node.toDTO();
 
         assertThat(nodeDTO.getName()).isEqualTo("A node");
-        assertThat(nodeDTO.getParentId()).isEqualTo(root.getId());
+        assertThat(nodeDTO.getParent()).isEqualTo(root.getName());
     }
 }

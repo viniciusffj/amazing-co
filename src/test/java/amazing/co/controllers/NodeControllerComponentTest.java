@@ -9,8 +9,7 @@ import org.springframework.http.HttpStatus;
 import static amazing.co.controllers.helpers.CompanyRequestsHelper.createCompany;
 import static amazing.co.controllers.helpers.CompanyRequestsHelper.deleteCompany;
 import static io.restassured.RestAssured.given;
-import static org.assertj.core.api.Java6Assertions.assertThat;
-import static org.hamcrest.Matchers.hasKey;
+import static org.hamcrest.Matchers.equalTo;
 
 public class NodeControllerComponentTest extends ComponentTest {
     private Integer companyId;
@@ -29,7 +28,7 @@ public class NodeControllerComponentTest extends ComponentTest {
 
     @Test
     public void shouldCreateRootNode() {
-        Integer nodeId = given()
+        given()
                 .contentType("application/json")
                 .body("{ \"name\": \"Root\" }")
                 .pathParam("companyId", companyId)
@@ -37,11 +36,9 @@ public class NodeControllerComponentTest extends ComponentTest {
                 .post("/companies/{companyId}/nodes")
         .then()
                 .statusCode(HttpStatus.CREATED.value())
-                .body("$", hasKey("id"))
+                .body("name", equalTo("Root"))
                 .extract()
                 .path("id");
-
-        assertThat(nodeId).isNotNull();
     }
 
     @Test
@@ -62,9 +59,9 @@ public class NodeControllerComponentTest extends ComponentTest {
                 .contentType("application/json")
                 .body("{ \"name\": \"Will not work\" }")
                 .pathParam("companyId", companyId)
-                .pathParam("parentId", 10000)
+                .pathParam("parent", "I-DO-NOT-EXIST")
         .when()
-                .post("/companies/{companyId}/nodes/{parentId}/nodes")
+                .post("/companies/{companyId}/nodes/{parent}/nodes")
         .then()
                 .statusCode(HttpStatus.NOT_FOUND.value());
     }
@@ -87,25 +84,22 @@ public class NodeControllerComponentTest extends ComponentTest {
      * */
     @Test
     public void shouldUpdateNodeParent() {
-        Integer rootId = NodeRequestHelper.createRoot(companyId);
-        Integer nodeAId = NodeRequestHelper.createNode(companyId, rootId, "A");
-        Integer nodeBId = NodeRequestHelper.createNode(companyId, rootId, "B");
+        String root = NodeRequestHelper.createRoot(companyId);
+        String nodeA = NodeRequestHelper.createNode(companyId, root, "A");
+        String nodeB = NodeRequestHelper.createNode(companyId, root, "B");
 
-        String body = String.format("{ \"newParentId\": \"%s\" }", nodeAId);
+        String body = String.format("{ \"newParent\": \"%s\" }", nodeA);
 
-        Integer actualParent = given()
+        given()
                 .contentType("application/json")
                 .body(body)
                 .pathParam("companyId", companyId)
-                .pathParam("nodeId", nodeBId)
+                .pathParam("node", nodeB)
         .when()
-                .put("/companies/{companyId}/nodes/{nodeId}")
+                .put("/companies/{companyId}/nodes/{node}")
         .then()
                 .statusCode(HttpStatus.OK.value())
-                .extract()
-                .path("parentId");
-
-        assertThat(actualParent).isEqualTo(nodeAId);
+                .body("parent", equalTo(nodeA));
     }
 
 }

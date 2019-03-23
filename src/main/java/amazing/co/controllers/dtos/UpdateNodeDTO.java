@@ -12,5 +12,5 @@ public class UpdateNodeDTO {
     @Setter
     @Getter
     @NotNull
-    private Long newParentId;
+    private String newParent;
 }
