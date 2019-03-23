@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -20,6 +21,9 @@ public class NodeDTO {
     @Getter
     private String parent;
 
+    @Getter
+    private List<NodeDTO> children;
+
     public NodeDTO(String name) {
         this.name = name;
     }
@@ -27,6 +31,17 @@ public class NodeDTO {
     public NodeDTO(String name, String parent) {
         this.name = name;
         this.parent = parent;
+    }
+
+    public NodeDTO(String name, List<NodeDTO> children) {
+        this.name = name;
+        this.children = children;
+    }
+
+    public NodeDTO(String name, String parent, List<NodeDTO> children) {
+        this.name = name;
+        this.parent = parent;
+        this.children = children;
     }
 
     public Node toNode(Company company) {

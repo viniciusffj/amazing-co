@@ -11,6 +11,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @EqualsAndHashCode(exclude = "id")
@@ -72,7 +73,20 @@ public class Node {
         return new NodeDTO(name, parent.getName());
     }
 
-    public List<Node> getChildren(NodeRepository nodeRepository) {
+    public NodeDTO toDTOWithChildren(NodeRepository nodeRepository) {
+        List<NodeDTO> children = getChildren(nodeRepository)
+                .stream()
+                .map(node -> node.toDTOWithChildren(nodeRepository))
+                .collect(Collectors.toList());
+
+        if (isRootNode()) {
+            return new NodeDTO(name, children);
+        }
+
+        return new NodeDTO(name, parent.getName(), children);
+    }
+
+    private List<Node> getChildren(NodeRepository nodeRepository) {
         return nodeRepository.findAllByParent(this);
     }
 }
