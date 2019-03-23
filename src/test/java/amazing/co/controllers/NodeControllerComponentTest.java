@@ -27,21 +27,6 @@ public class NodeControllerComponentTest extends ComponentTest {
     }
 
     @Test
-    public void shouldCreateRootNode() {
-        given()
-                .contentType("application/json")
-                .body("{ \"name\": \"Root\" }")
-                .pathParam("companyId", companyId)
-        .when()
-                .post("/companies/{companyId}/nodes")
-        .then()
-                .statusCode(HttpStatus.CREATED.value())
-                .body("name", equalTo("Root"))
-                .extract()
-                .path("id");
-    }
-
-    @Test
     public void shouldReturn404WhenCompanyDoesNotExist() {
         given()
                 .contentType("application/json")

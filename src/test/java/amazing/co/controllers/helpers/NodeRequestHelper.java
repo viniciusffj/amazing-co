@@ -3,6 +3,7 @@ package amazing.co.controllers.helpers;
 import org.springframework.http.HttpStatus;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalTo;
 
 public class NodeRequestHelper {
     public static String createRoot(Integer companyId) {
@@ -14,6 +15,7 @@ public class NodeRequestHelper {
             .when()
                     .post("/companies/{companyId}/nodes")
             .then()
+                    .body("name", equalTo("Root"))
                     .statusCode(HttpStatus.CREATED.value())
                     .extract()
                     .path("name");
@@ -31,6 +33,8 @@ public class NodeRequestHelper {
             .when()
                     .post("/companies/{companyId}/nodes/{parent}/nodes")
             .then()
+                    .body("name", equalTo(name))
+                    .body("parent", equalTo(parent))
                     .statusCode(HttpStatus.CREATED.value())
                     .extract()
                     .path("name");
