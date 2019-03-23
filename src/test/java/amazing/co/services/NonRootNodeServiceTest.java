@@ -40,7 +40,7 @@ public class NonRootNodeServiceTest {
     }
 
     @Test
-    public void shouldThrowWhenUpdatingRootNode() {
+    public void shouldThrowWhenUpdatingRootNode_Old() {
         Node node = Node.rootNode("Root", new Company("Company"));
 
         exceptionRule.expect(IllegalStateException.class);
@@ -49,7 +49,7 @@ public class NonRootNodeServiceTest {
     }
 
     @Test
-    public void shouldThrowWhenUpdatingInvalidNode() {
+    public void shouldThrowWhenUpdatingInvalidNode_Old() {
         long invalidNewParentId = 90000L;
         when(nodeRepository.findById(invalidNewParentId)).thenReturn(Optional.empty());
 
@@ -59,5 +59,47 @@ public class NonRootNodeServiceTest {
         exceptionRule.expect(EntityNotFoundException.class);
 
         nonRootNodeService.update(node, invalidNewParentId);
+    }
+
+    @Test
+    public void shouldThrowWhenUpdatingAnExistingNode() {
+        Company company = new Company("Company");
+
+        when(nodeRepository.findByNameAndCompany("I-DO-NOT-EXIST", company))
+                .thenReturn(Optional.empty());
+
+        exceptionRule.expect(EntityNotFoundException.class);
+
+        nonRootNodeService.update("I-DO-NOT-EXIST", company, "ANOTHER-NODE");
+    }
+
+    @Test
+    public void shouldThrowWhenUpdatingRootNode() {
+        Company company = new Company("Company");
+
+        when(nodeRepository.findByNameAndCompany("Root", company))
+                .thenReturn(Optional.of(Node.rootNode("Root", company)));
+
+        exceptionRule.expect(IllegalStateException.class);
+
+        nonRootNodeService.update("Root", company, "ANODE");
+    }
+
+    @Test
+    public void shouldThrowWhenUpdatingInvalidParentNode() {
+        Company company = new Company("Company");
+        Node root = Node.rootNode("Root", company);
+        Node node = Node.nonRootNode("valid-node", root, root);
+
+        when(nodeRepository.findByNameAndCompany("valid-node", company))
+                .thenReturn(Optional.of(node));
+
+        when(nodeRepository.findByNameAndCompany("not-a-valid-node", company))
+                .thenReturn(Optional.empty());
+
+
+        exceptionRule.expect(EntityNotFoundException.class);
+
+        nonRootNodeService.update("valid-node", company, "not-a-valid-node");
     }
 }

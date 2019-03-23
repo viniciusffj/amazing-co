@@ -2,6 +2,7 @@ package amazing.co.services;
 
 import amazing.co.exceptions.DuplicatedEntityException;
 import amazing.co.exceptions.EntityNotFoundException;
+import amazing.co.models.Company;
 import amazing.co.models.Node;
 import amazing.co.repositories.NodeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +46,27 @@ public class NonRootNodeService {
         Node parent = optionalNode.get();
         node.setParent(parent);
         return nodeRepository.save(node);
+    }
+
+    public Node update(String nodeName, Company company, String newParent) {
+        Node node = findNode(nodeName, company);
+
+        if (node.isRootNode()) {
+            throw new IllegalStateException("Cannot change root parent");
+        }
+
+        Node parentNode = findNode(newParent, company);
+
+        return null;
+    }
+
+    private Node findNode(String nodeName, Company company) {
+        Optional<Node> optionalNode = nodeRepository.findByNameAndCompany(nodeName, company);
+
+        if (!optionalNode.isPresent()) {
+            throw new EntityNotFoundException("Node does not exist");
+        }
+
+        return optionalNode.get();
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
@@ -79,5 +80,15 @@ public class NodeRepositoryIntegrationTest {
         nodeRepository.save(root);
 
         assertThat(nodeRepository.existsWhereRootIsNullByCompany(awesomeCompany)).isTrue();
+    }
+
+    @Test
+    public void shouldFindNodeByNameAndCompany() {
+        Node root = Node.rootNode("Root", awesomeCompany);
+        nodeRepository.save(root);
+
+        Optional<Node> optionalNode = nodeRepository.findByNameAndCompany("Root", awesomeCompany);
+        assertThat(optionalNode.isPresent()).isTrue();
+        assertThat(optionalNode.get().getName()).isEqualTo("Root");
     }
 }
