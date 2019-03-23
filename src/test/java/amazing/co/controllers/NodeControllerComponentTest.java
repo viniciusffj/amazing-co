@@ -87,4 +87,21 @@ public class NodeControllerComponentTest extends ComponentTest {
                 .body("parent", equalTo(nodeA));
     }
 
+    @Test
+    public void shouldGetChildrenOfNode() {
+        String root = NodeRequestHelper.createRoot(companyId);
+        String nodeA = NodeRequestHelper.createNode(companyId, root, "A");
+        String nodeB = NodeRequestHelper.createNode(companyId, nodeA, "B");
+
+        given()
+                .contentType("application/json")
+                .pathParam("companyId", companyId)
+                .pathParam("node", root)
+        .when()
+                .get("/companies/{companyId}/nodes/{node}/children")
+        .then()
+                .statusCode(HttpStatus.OK.value())
+                .body("[0].name", equalTo(nodeA))
+                .body("[0].children[0].name", equalTo(nodeB));
+    }
 }

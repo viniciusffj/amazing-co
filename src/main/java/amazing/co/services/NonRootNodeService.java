@@ -9,6 +9,7 @@ import amazing.co.repositories.NodeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -56,5 +57,11 @@ public class NonRootNodeService {
         node.setParent(parentNode);
 
         return nodeRepository.save(node);
+    }
+
+    public List<NodeDTO> getChildren(String nodeName, Company company) {
+        return findNode(nodeName, company)
+                .toDTOWithChildren(nodeRepository)
+                .getChildren();
     }
 }

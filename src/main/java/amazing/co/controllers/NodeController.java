@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 public class NodeController {
@@ -49,6 +50,13 @@ public class NodeController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(node.toDTO());
+    }
+
+    @GetMapping("/companies/{company}/nodes/{node}/children")
+    @ResponseBody
+    public List<NodeDTO> getChildren(@PathVariable Company company,
+                                     @PathVariable String node) {
+        return nonRootNodeService.getChildren(node, company);
     }
 
     @PutMapping("companies/{company}/nodes/{node}")

@@ -171,6 +171,33 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Get Children of Node",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/companies/1/nodes/root/children",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"companies",
+								"1",
+								"nodes",
+								"root",
+								"children"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
