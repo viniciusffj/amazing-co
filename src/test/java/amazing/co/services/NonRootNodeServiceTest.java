@@ -1,5 +1,6 @@
 package amazing.co.services;
 
+import amazing.co.controllers.dtos.NodeDTO;
 import amazing.co.exceptions.DuplicatedEntityException;
 import amazing.co.exceptions.EntityNotFoundException;
 import amazing.co.models.Company;
@@ -36,7 +37,7 @@ public class NonRootNodeServiceTest {
 
         exceptionRule.expect(DuplicatedEntityException.class);
 
-        nonRootNodeService.create("existing-node", company, "parent-node");
+        nonRootNodeService.create(new NodeDTO("existing-node"), company, "parent-node");
     }
 
     @Test
@@ -47,7 +48,7 @@ public class NonRootNodeServiceTest {
 
         exceptionRule.expect(EntityNotFoundException.class);
 
-        nonRootNodeService.create("existing-node", company, "parent-node");
+        nonRootNodeService.create(new NodeDTO("existing-node"), company, "parent-node");
     }
 
     @Test

@@ -1,5 +1,6 @@
 package amazing.co.services;
 
+import amazing.co.controllers.dtos.NodeDTO;
 import amazing.co.exceptions.DuplicatedEntityException;
 import amazing.co.exceptions.EntityNotFoundException;
 import amazing.co.models.Company;
@@ -20,20 +21,18 @@ public class NonRootNodeService {
         this.nodeRepository = nodeRepository;
     }
 
-    public Node create(String nodeName, Company company, String parentName) {
-        if (nodeExists(nodeName, company)) {
+    public Node create(NodeDTO nodeDTO, Company company, String parentName) {
+        if (nodeExists(nodeDTO, company)) {
             throw new DuplicatedEntityException("Node already exists");
         }
 
         Node parentNode = findNode(parentName, company);
 
-        Node node = Node.nonRootNode(nodeName, parentNode, parentNode.getRoot());
-
-        return nodeRepository.save(node);
+        return nodeRepository.save(nodeDTO.toNonRootNode(parentNode));
     }
 
-    private boolean nodeExists(String nodeName, Company company) {
-        return nodeRepository.existsByNameAndCompany(nodeName, company);
+    private boolean nodeExists(NodeDTO nodeDTO, Company company) {
+        return nodeRepository.existsByNameAndCompany(nodeDTO.getName(), company);
     }
 
     private Node findNode(String nodeName, Company company) {

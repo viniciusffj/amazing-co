@@ -44,7 +44,7 @@ public class NodeController {
     public ResponseEntity<NodeDTO> createNonRootNode(@PathVariable Company company,
                                                      @PathVariable String parent,
                                                      @RequestBody @Valid NodeDTO nodeDTO) {
-        Node node = nonRootNodeService.create(nodeDTO.getName(), company, parent);
+        Node node = nonRootNodeService.create(nodeDTO, company, parent);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
