@@ -15,8 +15,8 @@ public class NodeRequestHelper {
             .when()
                     .post("/companies/{companyId}/nodes")
             .then()
-                    .body("name", equalTo("Root"))
                     .statusCode(HttpStatus.CREATED.value())
+                    .body("name", equalTo("Root"))
                     .extract()
                     .path("name");
     }
@@ -31,11 +31,11 @@ public class NodeRequestHelper {
                     .pathParam("companyId", companyId)
                     .pathParam("parent", parent)
             .when()
-                    .post("/companies/{companyId}/nodes/{parent}/nodes")
+                    .post("/companies/{companyId}/nodes/{parent}/children")
             .then()
+                    .statusCode(HttpStatus.CREATED.value())
                     .body("name", equalTo(name))
                     .body("parent", equalTo(parent))
-                    .statusCode(HttpStatus.CREATED.value())
                     .extract()
                     .path("name");
     }

@@ -46,7 +46,7 @@ public class NodeControllerComponentTest extends ComponentTest {
                 .pathParam("companyId", companyId)
                 .pathParam("parent", "I-DO-NOT-EXIST")
         .when()
-                .post("/companies/{companyId}/nodes/{parent}/nodes")
+                .post("/companies/{companyId}/nodes/{parent}/children")
         .then()
                 .statusCode(HttpStatus.NOT_FOUND.value());
     }

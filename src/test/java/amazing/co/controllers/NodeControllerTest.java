@@ -34,7 +34,7 @@ public class NodeControllerTest extends BaseControllerTest {
     @Test
     public void shouldReturnBadRequestIfNamingIsMissingForNonRootNode() throws Exception {
         this.mvc.perform(
-                post("/companies/1/nodes/1/nodes")
+                post("/companies/1/nodes/1/children")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{ }"))
                 .andExpect(status().isBadRequest());
