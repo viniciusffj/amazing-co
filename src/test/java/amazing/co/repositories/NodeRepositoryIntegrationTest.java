@@ -69,6 +69,9 @@ public class NodeRepositoryIntegrationTest {
         Node nodeA = nonRoot("A", root);
         Node nodeB = nonRoot("B", nodeA);
 
+        assertThat(nodeA.getHeight()).isEqualTo(1);
+        assertThat(nodeB.getHeight()).isEqualTo(2);
+
         NodeDTO actual = root.toDTOWithChildren(nodeRepository);
 
         List<NodeDTO> childrenOfRoot = actual.getChildren();
@@ -85,6 +88,30 @@ public class NodeRepositoryIntegrationTest {
         assertThat(childrenOfA.get(0).getName()).isEqualTo(nodeB.getName());
         assertThat(childrenOfA.get(0).getHeight()).isEqualTo(nodeB.getHeight());
         assertThat(childrenOfA.get(0).getParent()).isEqualTo(nodeA.getName());
+    }
+
+    @Test
+    public void shouldSetParentAndRecalculateHeight() {
+        Node root = root();
+        Node nodeA = nonRoot("A", root);
+        Node nodeB = nonRoot("B", nodeA);
+        Node nodeC = nonRoot("C", nodeB);
+        Node nodeD = nonRoot("D", nodeC);
+        Node nodeE = nonRoot("E", nodeD);
+
+        nodeB.setParent(root, nodeRepository);
+
+        assertThat(nodeB.getParent()).isEqualTo(root);
+
+        Node updatedNodeB = nodeRepository.findById(nodeB.getId()).get();
+        Node updatedNodeC = nodeRepository.findById(nodeC.getId()).get();
+        Node updatedNodeD = nodeRepository.findById(nodeD.getId()).get();
+        Node updatedNodeE = nodeRepository.findById(nodeE.getId()).get();
+
+        assertThat(updatedNodeB.getHeight()).isEqualTo(1);
+        assertThat(updatedNodeC.getHeight()).isEqualTo(2);
+        assertThat(updatedNodeD.getHeight()).isEqualTo(3);
+        assertThat(updatedNodeE.getHeight()).isEqualTo(4);
     }
 
     private Node root() {

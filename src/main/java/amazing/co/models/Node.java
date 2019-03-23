@@ -57,7 +57,6 @@ public class Node {
 
     @OneToOne(optional = true)
     @Getter
-    @Setter
     private Node parent;
 
     @OneToOne(optional = true)
@@ -93,5 +92,19 @@ public class Node {
 
     private List<Node> getChildren(NodeRepository nodeRepository) {
         return nodeRepository.findAllByParent(this);
+    }
+
+    public void setParent(Node newParent, NodeRepository nodeRepository) {
+        this.parent = newParent;
+        this.updateHeight(newParent, nodeRepository);
+    }
+
+    private void updateHeight(Node newParent, NodeRepository nodeRepository) {
+        this.height = newParent.getHeight() + 1;
+
+        List<Node> children = getChildren(nodeRepository);
+
+        children.forEach(node -> node.updateHeight(this, nodeRepository));
+        nodeRepository.saveAll(children);
     }
 }

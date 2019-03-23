@@ -84,7 +84,8 @@ public class ComponentTest extends BaseComponentTest {
                 .put("/companies/{companyId}/nodes/{node}")
         .then()
                 .statusCode(HttpStatus.OK.value())
-                .body("parent", equalTo(nodeA));
+                .body("parent", equalTo(nodeA))
+                .body("height", equalTo(2));
     }
 
     @Test

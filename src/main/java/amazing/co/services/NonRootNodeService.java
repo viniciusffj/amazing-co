@@ -54,7 +54,7 @@ public class NonRootNodeService {
         }
 
         Node parentNode = findNode(newParent, company);
-        node.setParent(parentNode);
+        node.setParent(parentNode, nodeRepository);
 
         return nodeRepository.save(node);
     }
