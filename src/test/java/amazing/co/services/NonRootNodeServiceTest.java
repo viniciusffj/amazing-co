@@ -30,13 +30,34 @@ public class NonRootNodeServiceTest {
     public ExpectedException exceptionRule = ExpectedException.none();
 
     @Test
-    public void shouldThrowWhenCreatingDuplicatedNode() {
+    public void shouldThrowWhenCreatingDuplicatedNode_Old() {
         Company company = new Company("A company");
         when(nodeRepository.existsByNameAndCompany("existing-node", company)).thenReturn(true);
 
         exceptionRule.expect(DuplicatedEntityException.class);
 
         nonRootNodeService.create(Node.rootNode("existing-node", company));
+    }
+
+    @Test
+    public void shouldThrowWhenCreatingDuplicatedNode() {
+        Company company = new Company("A company");
+        when(nodeRepository.existsByNameAndCompany("existing-node", company)).thenReturn(true);
+
+        exceptionRule.expect(DuplicatedEntityException.class);
+
+        nonRootNodeService.create("existing-node", company, "parent-node");
+    }
+
+    @Test
+    public void shouldThrowWhenCreatingNodeAndParentIsInvalid() {
+        Company company = new Company("A company");
+        when(nodeRepository.existsByNameAndCompany("existing-node", company)).thenReturn(false);
+        when(nodeRepository.findByNameAndCompany("parent-node", company)).thenReturn(Optional.empty());
+
+        exceptionRule.expect(EntityNotFoundException.class);
+
+        nonRootNodeService.create("existing-node", company, "parent-node");
     }
 
     @Test

@@ -32,6 +32,20 @@ public class NonRootNodeService {
         return nodeRepository.existsByNameAndCompany(node.getName(), node.getCompany());
     }
 
+    public Node create(String nodeName, Company company, String parentName) {
+        if (nodeExists(nodeName, company)) {
+            throw new DuplicatedEntityException("Node already exists");
+        }
+
+        Node parentNode = findNode(parentName, company);
+
+        return parentNode;
+    }
+
+    private boolean nodeExists(String nodeName, Company company) {
+        return nodeRepository.existsByNameAndCompany(nodeName, company);
+    }
+
     public Node update(Node node, Long newParentId) {
         if (node.isRootNode()) {
             throw new IllegalStateException("Cannot change root parent");
