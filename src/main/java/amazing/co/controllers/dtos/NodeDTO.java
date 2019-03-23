@@ -12,9 +12,6 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class NodeDTO {
-    @Getter
-    private Long id;
-
     @Setter
     @Getter
     @NotNull
@@ -23,13 +20,11 @@ public class NodeDTO {
     @Getter
     private String parent;
 
-    public NodeDTO(Long id, String name) {
-        this.id = id;
+    public NodeDTO(String name) {
         this.name = name;
     }
 
-    public NodeDTO(Long id, String name, String parent) {
-        this.id = id;
+    public NodeDTO(String name, String parent) {
         this.name = name;
         this.parent = parent;
     }

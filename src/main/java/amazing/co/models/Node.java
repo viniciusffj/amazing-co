@@ -65,8 +65,8 @@ public class Node {
 
     public NodeDTO toDTO() {
         if (isRootNode()) {
-            return new NodeDTO(id, name);
+            return new NodeDTO(name);
         }
-        return new NodeDTO(id, name, parent.getName());
+        return new NodeDTO(name, parent.getName());
     }
 }
