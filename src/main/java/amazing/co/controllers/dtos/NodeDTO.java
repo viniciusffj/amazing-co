@@ -22,26 +22,33 @@ public class NodeDTO {
     private String parent;
 
     @Getter
+    private Integer height;
+
+    @Getter
     private List<NodeDTO> children;
 
-    public NodeDTO(String name) {
+    public NodeDTO(String name, Integer height) {
         this.name = name;
+        this.height = height;
     }
 
-    public NodeDTO(String name, String parent) {
+    public NodeDTO(String name, String parent, Integer height) {
         this.name = name;
         this.parent = parent;
+        this.height = height;
     }
 
-    public NodeDTO(String name, List<NodeDTO> children) {
+    public NodeDTO(String name, List<NodeDTO> children, Integer height) {
         this.name = name;
         this.children = children;
+        this.height = height;
     }
 
-    public NodeDTO(String name, String parent, List<NodeDTO> children) {
+    public NodeDTO(String name, String parent, List<NodeDTO> children, Integer height) {
         this.name = name;
         this.parent = parent;
         this.children = children;
+        this.height = height;
     }
 
     public Node toNode(Company company) {
@@ -51,4 +58,5 @@ public class NodeDTO {
     public Node toNonRootNode(Node parent) {
         return Node.nonRootNode(name, parent, parent.getRoot());
     }
+
 }

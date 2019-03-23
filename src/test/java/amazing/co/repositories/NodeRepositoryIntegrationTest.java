@@ -76,11 +76,14 @@ public class NodeRepositoryIntegrationTest {
         assertThat(childrenOfRoot.size()).isEqualTo(1);
 
         assertThat(childrenOfRoot.get(0).getName()).isEqualTo(nodeA.getName());
+        assertThat(childrenOfRoot.get(0).getHeight()).isEqualTo(nodeA.getHeight());
         assertThat(childrenOfRoot.get(0).getParent()).isEqualTo(root.getName());
 
         List<NodeDTO> childrenOfA = childrenOfRoot.get(0).getChildren();
         assertThat(childrenOfA.size()).isEqualTo(1);
+
         assertThat(childrenOfA.get(0).getName()).isEqualTo(nodeB.getName());
+        assertThat(childrenOfA.get(0).getHeight()).isEqualTo(nodeB.getHeight());
         assertThat(childrenOfA.get(0).getParent()).isEqualTo(nodeA.getName());
     }
 

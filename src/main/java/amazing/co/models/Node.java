@@ -24,6 +24,7 @@ public class Node {
     private Node(String name, Company company) {
         this.name = name;
         this.company = company;
+        this.height = 0;
     }
 
     public static Node nonRootNode(String name, Node parent, Node root) {
@@ -35,6 +36,7 @@ public class Node {
         this.parent = parent;
         this.root = root;
         this.company = parent.getCompany();
+        this.height = parent.getHeight() + 1;
     }
 
     @Id
@@ -44,6 +46,9 @@ public class Node {
 
     @Getter
     private String name;
+
+    @Getter
+    private Integer height;
 
     @Getter
     @ManyToOne
@@ -68,9 +73,9 @@ public class Node {
 
     public NodeDTO toDTO() {
         if (isRootNode()) {
-            return new NodeDTO(name);
+            return new NodeDTO(name, height);
         }
-        return new NodeDTO(name, parent.getName());
+        return new NodeDTO(name, parent.getName(), height);
     }
 
     public NodeDTO toDTOWithChildren(NodeRepository nodeRepository) {
@@ -80,10 +85,10 @@ public class Node {
                 .collect(Collectors.toList());
 
         if (isRootNode()) {
-            return new NodeDTO(name, children);
+            return new NodeDTO(name, children, height);
         }
 
-        return new NodeDTO(name, parent.getName(), children);
+        return new NodeDTO(name, parent.getName(), children, height);
     }
 
     private List<Node> getChildren(NodeRepository nodeRepository) {

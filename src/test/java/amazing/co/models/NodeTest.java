@@ -16,6 +16,7 @@ public class NodeTest {
 
         assertThat(nodeDTO.getName()).isEqualTo("root");
         assertThat(nodeDTO.getParent()).isNull();
+        assertThat(nodeDTO.getHeight()).isEqualTo(0);
     }
 
     @Test
@@ -27,5 +28,6 @@ public class NodeTest {
 
         assertThat(nodeDTO.getName()).isEqualTo("A node");
         assertThat(nodeDTO.getParent()).isEqualTo(root.getName());
+        assertThat(nodeDTO.getHeight()).isEqualTo(1);
     }
 }

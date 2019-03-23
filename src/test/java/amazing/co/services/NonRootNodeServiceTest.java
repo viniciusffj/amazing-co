@@ -37,7 +37,7 @@ public class NonRootNodeServiceTest {
 
         exceptionRule.expect(DuplicatedEntityException.class);
 
-        nonRootNodeService.create(new NodeDTO("existing-node"), company, "parent-node");
+        nonRootNodeService.create(new NodeDTO("existing-node", 1), company, "parent-node");
     }
 
     @Test
@@ -48,7 +48,7 @@ public class NonRootNodeServiceTest {
 
         exceptionRule.expect(EntityNotFoundException.class);
 
-        nonRootNodeService.create(new NodeDTO("existing-node"), company, "parent-node");
+        nonRootNodeService.create(new NodeDTO("existing-node", 1), company, "parent-node");
     }
 
     @Test
