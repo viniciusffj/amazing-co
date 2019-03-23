@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @NoArgsConstructor
@@ -15,7 +15,7 @@ import java.util.List;
 public class NodeDTO {
     @Setter
     @Getter
-    @NotNull
+    @NotBlank
     private String name;
 
     @Getter

@@ -23,7 +23,7 @@ public class NodeControllerTest extends BaseControllerTest {
     private RootNodeService rootNodeService;
 
     @Test
-    public void shouldReturnBadRequestIfNamingIsMissingForRootNode() throws Exception {
+    public void shouldReturnBadRequestIfNameIsMissingForRootNode() throws Exception {
         this.mvc.perform(
                     post("/companies/1/nodes")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -32,11 +32,29 @@ public class NodeControllerTest extends BaseControllerTest {
     }
 
     @Test
-    public void shouldReturnBadRequestIfNamingIsMissingForNonRootNode() throws Exception {
+    public void shouldReturnBadRequestIfNameIsEmptyForRootNode() throws Exception {
+        this.mvc.perform(
+                post("/companies/1/nodes")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{ \"name\": \"\" }"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shouldReturnBadRequestIfNameIsMissingForNonRootNode() throws Exception {
         this.mvc.perform(
                 post("/companies/1/nodes/1/children")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{ }"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shouldReturnBadRequestIfNameIsEmptyForNonRootNode() throws Exception {
+        this.mvc.perform(
+                post("/companies/1/nodes/1/children")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{ \"name\": \"\" }"))
                 .andExpect(status().isBadRequest());
     }
 

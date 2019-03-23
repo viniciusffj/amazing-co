@@ -43,11 +43,20 @@ public class CompanyControllerTest extends BaseControllerTest {
     }
 
     @Test
-    public void shouldReturnBadRequestIfNamingIsMissing() throws Exception {
+    public void shouldReturnBadRequestIfNameIsMissing() throws Exception {
         this.mvc.perform(
                     post("/companies")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{ }"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shouldReturnBadRequestIfNameIsEmpty() throws Exception {
+        this.mvc.perform(
+                post("/companies")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{ \"name\": \"\" }"))
                 .andExpect(status().isBadRequest());
     }
 }
