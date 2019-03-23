@@ -1,4 +1,4 @@
-package amazing.co.controllers;
+package amazing.co.component;
 
 import amazing.co.controllers.helpers.NodeRequestHelper;
 import org.junit.After;

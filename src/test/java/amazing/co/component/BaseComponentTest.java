@@ -1,4 +1,4 @@
-package amazing.co.controllers;
+package amazing.co.component;
 
 import io.restassured.RestAssured;
 import org.junit.Before;
