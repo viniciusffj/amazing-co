@@ -27,7 +27,7 @@ public class CompanyServiceTest {
     public ExpectedException exceptionRule = ExpectedException.none();
 
     @Test
-    public void shouldThrowWhenCreatingADuplicatedCompany() {
+    public void shouldThrowErrorWhenCreatingADuplicatedCompany() {
         when(companyRepository.existsByName("Great Corp"))
                 .thenReturn(true);
 
@@ -37,7 +37,7 @@ public class CompanyServiceTest {
     }
 
     @Test
-    public void shouldThrowWhenDeletingInvalidCompany() {
+    public void shouldThrowErrorWhenDeletingInvalidCompany() {
         when(companyRepository.existsById(1914L))
                 .thenReturn(false);
 

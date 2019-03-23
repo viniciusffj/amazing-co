@@ -31,7 +31,7 @@ public class NonRootNodeServiceTest {
     public ExpectedException exceptionRule = ExpectedException.none();
 
     @Test
-    public void shouldThrowWhenCreatingDuplicatedNode() {
+    public void shouldThrowErrorWhenCreatingDuplicatedNode() {
         Company company = new Company("A company");
         when(nodeRepository.existsByNameAndCompany("existing-node", company)).thenReturn(true);
 
@@ -41,7 +41,7 @@ public class NonRootNodeServiceTest {
     }
 
     @Test
-    public void shouldThrowWhenCreatingNodeAndParentIsInvalid() {
+    public void shouldThrowErrorWhenCreatingNodeAndParentIsInvalid() {
         Company company = new Company("A company");
         when(nodeRepository.existsByNameAndCompany("existing-node", company)).thenReturn(false);
         when(nodeRepository.findByNameAndCompany("parent-node", company)).thenReturn(Optional.empty());
@@ -53,7 +53,7 @@ public class NonRootNodeServiceTest {
     }
 
     @Test
-    public void shouldThrowWhenUpdatingAnExistingNode() {
+    public void shouldThrowErrorWhenUpdatingAnExistingNode() {
         Company company = new Company("Company");
 
         when(nodeRepository.findByNameAndCompany("I-DO-NOT-EXIST", company))
@@ -66,7 +66,7 @@ public class NonRootNodeServiceTest {
     }
 
     @Test
-    public void shouldThrowWhenUpdatingRootNode() {
+    public void shouldThrowErrorWhenUpdatingRootNode() {
         Company company = new Company("Company");
 
         when(nodeRepository.findByNameAndCompany("Root", company))
@@ -78,7 +78,7 @@ public class NonRootNodeServiceTest {
     }
 
     @Test
-    public void shouldThrowWhenUpdatingInvalidParentNode() {
+    public void shouldThrowErrorWhenUpdatingInvalidParentNode() {
         Company company = new Company("Company");
         Node root = Node.rootNode("Root", company);
         Node node = Node.nonRootNode("valid-node", root, root);

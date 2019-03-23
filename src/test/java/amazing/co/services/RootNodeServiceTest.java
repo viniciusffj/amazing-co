@@ -26,7 +26,7 @@ public class RootNodeServiceTest {
     public ExpectedException exceptionRule = ExpectedException.none();
 
     @Test
-    public void shouldThrowWhenCreatingDuplicatedRootNode() {
+    public void shouldThrowErrorWhenCreatingDuplicatedRootNode() {
         Company company = new Company("A company");
         when(nodeRepository.existsWhereRootIsNullByCompany(company)).thenReturn(true);
 
