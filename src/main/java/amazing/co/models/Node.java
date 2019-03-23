@@ -1,6 +1,7 @@
 package amazing.co.models;
 
 import amazing.co.controllers.dtos.NodeDTO;
+import amazing.co.repositories.NodeRepository;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @EqualsAndHashCode(exclude = "id")
@@ -68,5 +70,9 @@ public class Node {
             return new NodeDTO(name);
         }
         return new NodeDTO(name, parent.getName());
+    }
+
+    public List<Node> getChildren(NodeRepository nodeRepository) {
+        return nodeRepository.findAllByParent(this);
     }
 }
