@@ -71,9 +71,9 @@ public class Node {
 
     public NodeDTO toDTO() {
         if (isRootNode()) {
-            return new NodeDTO(name, height);
+            return NodeDTO.rootNode(name, height);
         }
-        return new NodeDTO(name, parent.getName(), height);
+        return NodeDTO.nonRootNode(name, parent.getName(), height);
     }
 
     public NodeDTO toDTOWithChildren(NodeRepository nodeRepository) {
@@ -83,10 +83,10 @@ public class Node {
                 .collect(Collectors.toList());
 
         if (isRootNode()) {
-            return new NodeDTO(name, children, height);
+            return NodeDTO.rootNode(name, children, height);
         }
 
-        return new NodeDTO(name, parent.getName(), children, height);
+        return NodeDTO.nonRootNode(name, parent.getName(), children, height);
     }
 
     private List<Node> getChildren(NodeRepository nodeRepository) {
