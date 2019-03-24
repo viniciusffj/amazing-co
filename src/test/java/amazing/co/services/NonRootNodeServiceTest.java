@@ -95,4 +95,14 @@ public class NonRootNodeServiceTest {
 
         nonRootNodeService.update("valid-node", company, "not-a-valid-node");
     }
+
+    @Test
+    public void shouldThrowErrorWhenUpdatingANodeToBeItsOwnParent() {
+        Company company = new Company("Company");
+
+        exceptionRule.expect(IllegalStateException.class);
+        exceptionRule.expectMessage("A node cannot be its own parent");
+
+        nonRootNodeService.update("valid-node", company, "valid-node");
+    }
 }

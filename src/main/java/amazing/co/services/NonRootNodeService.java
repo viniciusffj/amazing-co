@@ -47,6 +47,10 @@ public class NonRootNodeService {
     }
 
     public Node update(String nodeName, Company company, String newParent) {
+        if (isSameNode(nodeName, newParent)) {
+            throw new IllegalStateException("A node cannot be its own parent");
+        }
+
         Node node = findNode(nodeName, company);
 
         if (node.isRootNode()) {
@@ -57,6 +61,10 @@ public class NonRootNodeService {
         node.setParent(parentNode, nodeRepository);
 
         return nodeRepository.save(node);
+    }
+
+    private boolean isSameNode(String nodeName, String newParent) {
+        return nodeName.equals(newParent);
     }
 
     public List<NodeDTO> getChildren(String nodeName, Company company) {
