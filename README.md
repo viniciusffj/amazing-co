@@ -1,4 +1,3 @@
-
 # Amazing Co
 
 API to structure Amazing Co
@@ -211,6 +210,5 @@ To keep things simple:
 
 * H2 was used instead of a more robust database
 * No migration tool is being used, Hibernate is creating the schema
-* 
 
 ---
