@@ -189,3 +189,8 @@ and an actual server is started.
 
 Because these tests are more expensive, there are fewer of them as they should not verify edge cases.
 
+### Limitations
+
+To keep things simple
+* H2 was used instead of a more robust database
+* No migration tool is being used, hibernate 
