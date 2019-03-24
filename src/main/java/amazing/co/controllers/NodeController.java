@@ -34,7 +34,7 @@ public class NodeController {
     public ResponseEntity<NodeDTO> createRootNode(@PathVariable Company company,
                                                   @RequestBody @Valid NodeDTO nodeDTO) {
         Node node = nodeDTO.toNode(company);
-        Node nodeWithId = rootNodeService.createNode(node);
+        Node nodeWithId = rootNodeService.create(node);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)

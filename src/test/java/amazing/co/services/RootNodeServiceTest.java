@@ -32,7 +32,7 @@ public class RootNodeServiceTest {
 
         exceptionRule.expect(DuplicatedEntityException.class);
 
-        rootNodeService.createNode(Node.rootNode("duplicated-root", company));
+        rootNodeService.create(Node.rootNode("duplicated-root", company));
     }
 
 }

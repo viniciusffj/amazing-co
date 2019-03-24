@@ -16,7 +16,7 @@ public class RootNodeService {
         this.nodeRepository = nodeRepository;
     }
 
-    public Node createNode(Node rootNode) {
+    public Node create(Node rootNode) {
         if (rootNodeExists(rootNode)) {
             throw new DuplicatedEntityException("Root node already exists");
         }
