@@ -1,6 +1,7 @@
 package amazing.co.repositories;
 
 import amazing.co.controllers.dtos.NodeDTO;
+import amazing.co.controllers.dtos.NodeWithChildrenDTO;
 import amazing.co.models.Company;
 import amazing.co.models.Node;
 import org.junit.After;
@@ -72,9 +73,9 @@ public class NodeRepositoryIntegrationTest {
         assertThat(nodeA.getHeight()).isEqualTo(1);
         assertThat(nodeB.getHeight()).isEqualTo(2);
 
-        NodeDTO actual = root.toDTOWithChildren(nodeRepository);
+        NodeWithChildrenDTO actual = root.toDTOWithChildren(nodeRepository);
 
-        List<NodeDTO> childrenOfRoot = actual.getChildren();
+        List<NodeWithChildrenDTO> childrenOfRoot = actual.getChildren();
 
         assertThat(childrenOfRoot.size()).isEqualTo(1);
 
@@ -82,7 +83,7 @@ public class NodeRepositoryIntegrationTest {
         assertThat(childrenOfRoot.get(0).getHeight()).isEqualTo(nodeA.getHeight());
         assertThat(childrenOfRoot.get(0).getParent()).isEqualTo(root.getName());
 
-        List<NodeDTO> childrenOfA = childrenOfRoot.get(0).getChildren();
+        List<NodeWithChildrenDTO> childrenOfA = childrenOfRoot.get(0).getChildren();
         assertThat(childrenOfA.size()).isEqualTo(1);
 
         assertThat(childrenOfA.get(0).getName()).isEqualTo(nodeB.getName());

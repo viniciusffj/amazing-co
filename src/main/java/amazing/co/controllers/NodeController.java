@@ -1,6 +1,7 @@
 package amazing.co.controllers;
 
 import amazing.co.controllers.dtos.NodeDTO;
+import amazing.co.controllers.dtos.NodeWithChildrenDTO;
 import amazing.co.controllers.dtos.UpdateNodeDTO;
 import amazing.co.models.Company;
 import amazing.co.models.Node;
@@ -54,8 +55,8 @@ public class NodeController {
 
     @GetMapping("/companies/{company}/nodes/{node}/children")
     @ResponseBody
-    public List<NodeDTO> getChildren(@PathVariable Company company,
-                                     @PathVariable String node) {
+    public List<NodeWithChildrenDTO> getChildren(@PathVariable Company company,
+                                                 @PathVariable String node) {
         return nonRootNodeService.getChildren(node, company);
     }
 

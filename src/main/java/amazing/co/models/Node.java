@@ -1,6 +1,7 @@
 package amazing.co.models;
 
 import amazing.co.controllers.dtos.NodeDTO;
+import amazing.co.controllers.dtos.NodeWithChildrenDTO;
 import amazing.co.repositories.NodeRepository;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -76,17 +77,17 @@ public class Node {
         return NodeDTO.nonRootNode(name, parent.getName(), height);
     }
 
-    public NodeDTO toDTOWithChildren(NodeRepository nodeRepository) {
-        List<NodeDTO> children = getChildren(nodeRepository)
+    public NodeWithChildrenDTO toDTOWithChildren(NodeRepository nodeRepository) {
+        List<NodeWithChildrenDTO> children = getChildren(nodeRepository)
                 .stream()
                 .map(node -> node.toDTOWithChildren(nodeRepository))
                 .collect(Collectors.toList());
 
         if (isRootNode()) {
-            return NodeDTO.rootNode(name, children, height);
+            return NodeWithChildrenDTO.rootNode(name, children, height);
         }
 
-        return NodeDTO.nonRootNode(name, parent.getName(), children, height);
+        return NodeWithChildrenDTO.nonRootNode(name, parent.getName(), children, height);
     }
 
     private List<Node> getChildren(NodeRepository nodeRepository) {

@@ -1,6 +1,7 @@
 package amazing.co.services;
 
 import amazing.co.controllers.dtos.NodeDTO;
+import amazing.co.controllers.dtos.NodeWithChildrenDTO;
 import amazing.co.exceptions.DuplicatedEntityException;
 import amazing.co.exceptions.EntityNotFoundException;
 import amazing.co.models.Company;
@@ -67,7 +68,7 @@ public class NonRootNodeService {
         return nodeName.equals(newParent);
     }
 
-    public List<NodeDTO> getChildren(String nodeName, Company company) {
+    public List<NodeWithChildrenDTO> getChildren(String nodeName, Company company) {
         return findNode(nodeName, company)
                 .toDTOWithChildren(nodeRepository)
                 .getChildren();
