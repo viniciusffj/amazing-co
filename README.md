@@ -136,6 +136,7 @@ For a matter of keeping things simple, the scope has some limitations:
 * A node can't be deleted, only the entire tree by deleting the company
 * Can not change root node's parent
 * Can not move a node from one company's tree to another company's tree
+* Can not change a node to be a child of one of its current children. To do that, an extra step of first moving the current child is needed
 
 
 ## Developing
