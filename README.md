@@ -1,6 +1,6 @@
 # Amazing Co
 
-API to structure Amazing Co
+REST API to help organize companies
 
 ## Table of Contents
 * [Running](#running)
