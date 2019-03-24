@@ -1,4 +1,15 @@
+
 # Amazing Co
+
+API to structure Amazing Co
+
+## Table of Contents
+* [Running](#running)
+* [Using](#using)
+* [Developing](#developing)
+
+----
+
 
 ## Running
 
@@ -158,6 +169,12 @@ for testing microservices.
 The application was built using TDD, so feel free to look at commit history
 to have an idea on how it was.
 
+Tests can be run with
+
+```shell
+make test
+```
+
 #### Unit test
 
 Each piece of the application has their own unit test. Those are mostly regular
@@ -194,3 +211,6 @@ To keep things simple:
 
 * H2 was used instead of a more robust database
 * No migration tool is being used, Hibernate is creating the schema
+* 
+
+---
