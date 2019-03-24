@@ -7,8 +7,6 @@ API to structure Amazing Co
 * [Using](#using)
 * [Developing](#developing)
 
-----
-
 
 ## Running
 
@@ -203,6 +201,20 @@ and an actual server is started.
 [Rest-assured](http://rest-assured.io/) is being used to make requests and verify responses.
 
 Because these tests are more expensive, there are fewer of them as they should not verify edge cases.
+
+### H2 console
+
+To connect with application database, use h2 web console.
+
+Go to [http://localhost:8080/h2-console](http://localhost:8080/h2-console), enter the following
+
+```
+JDBC URL: jdbc:h2:mem:testdb
+User Name: sa
+Password: <empty>
+```
+
+Then click `Connect`
 
 ### Limitations
 
