@@ -1,6 +1,5 @@
 # Amazing Co
 
-
 ## Running
 
 First of all, make sure [docker](https://www.docker.com/) is installed
@@ -191,6 +190,7 @@ Because these tests are more expensive, there are fewer of them as they should n
 
 ### Limitations
 
-To keep things simple
+To keep things simple:
+
 * H2 was used instead of a more robust database
-* No migration tool is being used, hibernate 
+* No migration tool is being used, Hibernate is creating the schema
